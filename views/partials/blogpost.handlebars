@@ -1,0 +1,6 @@
+<article>
+  <h1>{{post.title}}</h1>
+  <p>{{post.body}}</p>
+  <p>Posted by {{post.author}} on {{formatDate post.createdAt}}</p>
+</article>
+{{> commentSection comments=post.comments}}

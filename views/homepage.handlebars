@@ -1,0 +1,11 @@
+<header>
+    <h1>Welcome to the Blog!</h1>
+</header>
+<section>
+    {{#each posts as |post|}}
+    <article>
+        <h2><a href="/blogs/{{post.id}}">{{post.title}}</a></h2>
+        <p>{{truncate post.body 100}}</p>
+    </article>
+    {{/each}}
+</section>
