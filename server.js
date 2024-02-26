@@ -7,11 +7,17 @@ const helpers = require('./utils/helpers');
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const { seedDatabase } = require('./seeds/seed');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 const hbs = exphbs.create({ helpers });
+hbs.handlebars.registerPartial('blogpost', fs.readFileSync(__dirname + '/views/partials/blogpost.handlebars', 'utf8'));
+hbs.handlebars.registerPartial('comment', fs.readFileSync(__dirname + '/views/partials/comment.handlebars', 'utf8'));
+hbs.handlebars.registerPartial('editcomment', fs.readFileSync(__dirname + '/views/partials/editcomment.handlebars', 'utf8'));
+hbs.handlebars.registerPartial('editpost', fs.readFileSync(__dirname + '/views/partials/editpost.handlebars', 'utf8'));
+
 
 const sess = {
     secret: 'Super secret secret',
@@ -66,4 +72,3 @@ sequelize.sync({ force: false }).then(async () => {
     app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
 }).catch(err => console.error('Error syncing database:', err));
 
-// main();

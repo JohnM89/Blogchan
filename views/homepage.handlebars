@@ -1,14 +1,19 @@
 <header>
     <h1>Welcome to the Blog!</h1>
+    <nav>
+        {{#if loggedIn}}
+            <a href="/signout">Sign Out</a>
+            <a href="/blogs/new">Create New Post</a>
+        {{else}}
+            <a href="/signin">Sign In</a>
+            <a href="/signup">Sign Up</a>
+        {{/if}}
+    </nav>
 </header>
 <section>
-    {{#each posts as |post|}}
-    <article>
-        <h2><a href="/blogs/{{post.id}}">{{post.title}}</a></h2>
-        <p>{{truncate post.body 100}}</p>
-        {{log "Post ID:" post.id}}
-        {{log "Post Title:" post.title}}
-        {{log "Post Body:" post.body}}
-    </article>
+    {{#each posts}}
+        {{> blogpost}}
     {{/each}}
 </section>
+<footer>
+    <p>&copy; 2024 BlogChan</p>

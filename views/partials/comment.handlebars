@@ -1,18 +1,26 @@
 <section>
-  <h2>Comments</h2>
-  {{#if comments.length}}
-    <ul>
-      {{#each comments as |comment|}}
-        <li>{{comment.author}}: {{comment.body}}</li>
-      {{/each}}
-    </ul>
-  {{else}}
-    <p>No comments yet. Be the first to comment!</p>
-  {{/if}}
-  {{#if loggedIn}}
-    <form action="/posts/{{postId}}/comments" method="POST">
-      <textarea name="commentBody" required></textarea>
-      <button type="submit">Submit Comment</button>
-    </form>
-  {{/if}}
+    <h2>Comments</h2>
+    {{#if comments.length}}
+        <ul>
+            {{#each comments as |comment|}}
+                <li>
+                    {{comment.author}}: {{comment.body}}
+                    {{#if userCanEdit}}
+                        <button onclick="toggleEditForm('comment', {{comment.id}})">Edit</button>
+                        <div id="edit-comment-form-{{comment.id}}" style="display: none;">
+                            {{> editComment comment=comment}}
+                        </div>
+                    {{/if}}
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>No comments yet. Be the first to comment!</p>
+    {{/if}}
+    {{#if loggedIn}}
+        <form action="/posts/{{postId}}/comments" method="POST">
+            <textarea name="commentBody" required></textarea>
+            <button type="submit">Submit Comment</button>
+        </form>
+    {{/if}}
 </section>

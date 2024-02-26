@@ -1,0 +1,6 @@
+<form action="/comments/update/{{comment.id}}" method="POST">
+    <label for="edit-comment-{{comment.id}}">Comment:</label>
+    <textarea id="edit-comment-{{comment.id}}" name="body" required>{{comment.body}}</textarea>
+
+    <button type="submit">Update Comment</button>
+</form>

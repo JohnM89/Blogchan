@@ -1,6 +1,10 @@
 <article>
-  <h1>{{post.title}}</h1>
-  <p>{{post.body}}</p>
-  <p>Posted by {{post.author}} on {{formatDate post.createdAt}}</p>
+    <h2><a href="/blogs/{{this.id}}">{{this.title}}</a></h2>
+    <p>{{truncate this.body 100}}</p>
+    {{#if userCanEdit}}
+        <button onclick="toggleEditForm('post', {{this.id}})">Edit</button>
+        <div id="edit-post-form-{{this.id}}" style="display: none;">
+            {{> editPost post=this}}
+        </div>
+    {{/if}}
 </article>
-{{> commentSection comments=post.comments}}
