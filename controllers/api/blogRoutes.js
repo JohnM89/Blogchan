@@ -6,6 +6,7 @@ const withAuth = require('../../utils/auth');
 
 router.get('/blogs/:id', async (req, res) => {
     try {
+        console.log("GET /blogs/:id");
         
         const blogPostData = await BlogPost.findByPk(req.params.id, {
             include: [{
@@ -30,10 +31,10 @@ router.get('/blogs/:id', async (req, res) => {
     }
 });
 
-// additional routes for blog post operations
-
 router.get('/blogs/edit/:id', withAuth, async (req, res) => {
     try {
+        console.log("GET /blogs/edit/:id");
+        
         const blogPostData = await BlogPost.findByPk(req.params.id);
         if (blogPostData) {
             const blogPost = blogPostData.get({ plain: true });
@@ -52,6 +53,8 @@ router.get('/blogs/edit/:id', withAuth, async (req, res) => {
 
 
 router.get('/blogs/new', withAuth, (req, res) => {
+    console.log("GET /blogs/new");
+    
     res.render('newPost', {
         loggedIn: req.session.logged_in
     });
@@ -59,6 +62,8 @@ router.get('/blogs/new', withAuth, (req, res) => {
 
 router.post('/blogs', withAuth, async (req, res) => {
     try {
+        console.log("POST /blogs");
+        
         const newBlogPost = await BlogPost.create({
             ...req.body,
             userId: req.session.userId 
@@ -73,6 +78,8 @@ router.post('/blogs', withAuth, async (req, res) => {
 
 router.delete('/blogs/:id', withAuth, async (req, res) => {
     try {
+        console.log("DELETE /blogs/:id");
+        
         const blogPostData = await BlogPost.destroy({
             where: {
                 id: req.params.id,
@@ -91,12 +98,13 @@ router.delete('/blogs/:id', withAuth, async (req, res) => {
     }
 });
 
-// Route to upvote a blog post
 router.put('/blogs/upvote/:id', withAuth, async (req, res) => {
     try {
+        console.log("PUT /blogs/upvote/:id");
+        
         const post = await BlogPost.findByPk(req.params.id);
         if (post) {
-            post.upvotes += 1; // Increment upvotes
+            post.upvotes += 1;
             await post.save();
             res.status(200).json(post);
         } else {
@@ -107,12 +115,13 @@ router.put('/blogs/upvote/:id', withAuth, async (req, res) => {
     }
 });
 
-// Route to downvote a blog post
 router.put('/blogs/downvote/:id', withAuth, async (req, res) => {
     try {
+        console.log("PUT /blogs/downvote/:id");
+        
         const post = await BlogPost.findByPk(req.params.id);
         if (post) {
-            post.downvotes += 1; // Increment downvotes
+            post.downvotes += 1;
             await post.save();
             res.status(200).json(post);
         } else {

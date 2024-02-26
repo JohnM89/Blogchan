@@ -49,4 +49,10 @@ Comment.init({
     modelName: 'comment',
 });
 
+Comment.associate = (models) => {
+    Comment.belongsTo(models.BlogPost, {
+        foreignKey: 'blogPostId',
+    });
+};
+
 module.exports = Comment;

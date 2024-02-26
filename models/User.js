@@ -27,10 +27,14 @@ User.init(
         password: {
             type: DataTypes.STRING,
             allowNull: false,
+            validate: {
+                len: [8],
+            },
         },
         date_joined: {
             type: DataTypes.DATE,
             allowNull: false,
+            defaultValue: DataTypes.NOW, 
         },
     },
     {
@@ -45,11 +49,12 @@ User.init(
             },
         },
         sequelize,
-        timestamps: false,
+        timestamps: false, 
         freezeTableName: true,
         underscored: true,
-        modelName: 'user',
+        modelName: 'user', 
     }
 );
+
 
 module.exports = User;

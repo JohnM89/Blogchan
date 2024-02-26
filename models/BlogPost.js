@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class BlogPost extends Model { }
+class BlogPost extends Model {}
 
 BlogPost.init({
     id: {
@@ -31,7 +31,7 @@ BlogPost.init({
     userId: {
         type: DataTypes.INTEGER,
         references: {
-            model: 'user',
+            model: 'user', 
             key: 'id',
         },
     },
@@ -42,6 +42,10 @@ BlogPost.init({
     modelName: 'blogPost',
 });
 
-console.log(BlogPost);
+BlogPost.associate = (models) => {
+    BlogPost.hasMany(models.Comment, {
+        foreignKey: 'blogPostId',
+    });
+};
 
 module.exports = BlogPost;

@@ -1,6 +1,7 @@
-<article>
-    <h1>{{post.title}}</h1>
-    <p>{{post.body}}</p>
-    <p>Posted by {{post.author}} on {{formatDate post.createdAt}}</p>
-</article>
-{{> commentSection comments=post.comments}}
+{{#each posts}}
+    <article>
+        <h2><a href="/blogs/{{this.id}}">{{this.title}}</a></h2>
+        <p>{{this.summary}}</p>
+        <a href="/blogs/{{this.id}}" class="read-more-btn">Read More</a>
+    </article>
+{{/each}}

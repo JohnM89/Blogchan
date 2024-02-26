@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { BlogPost } = require('../models/index.js');
-const withAuth = require('../utils/auth.js');
-const { Comment } = require('../models/index.js');
-const { User } = require('../models/index.js');
+const { BlogPost, Comment } = require('../models/index.js');
+
 
 router.get('/', async (req, res) => {
   try {
-    
+
     const blogPostData = await BlogPost.findAll();
     const posts = blogPostData.map(post => post.get({ plain: true }));
 
@@ -30,6 +28,27 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+router.get('/blogs/:id', async (req, res) => {
+    try {
+        const blogPostData = await BlogPost.findByPk(req.params.id, {
+            include: [{ model: Comment, attributes: ['id', 'comment_text', 'createdAt', 'userId', 'upVotes', 'downVotes'] }],
+        });
+
+        if (!blogPostData) {
+            return res.status(404).send('Post not found');
+        }
+
+        res.render('blogpost', {
+            post: blogPostData.get({ plain: true }),
+            loggedIn: req.session.loggedIn 
+        });
+    } catch (err) {
+        console.error('Error fetching blog post:', err);
+        res.status(500).send('Server error');
+    }
+});
+
 
 router.get('/signup', (req, res) => {
   if (req.session.loggedIn) {
