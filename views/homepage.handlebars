@@ -6,6 +6,9 @@
     <article>
         <h2><a href="/blogs/{{post.id}}">{{post.title}}</a></h2>
         <p>{{truncate post.body 100}}</p>
+        {{log "Post ID:" post.id}}
+        {{log "Post Title:" post.title}}
+        {{log "Post Body:" post.body}}
     </article>
     {{/each}}
 </section>

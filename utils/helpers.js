@@ -31,6 +31,17 @@ const helpers = {
             return `<span for="img" aria-label="coffee">☕️</span>`;
         }
     },
+
+        truncate: (str, len) => {
+        if (str && str.length > len) {
+            return str.substring(0, len) + '...';
+        }
+        return str;
+    },
 };
+
+
+
+
 
 module.exports = helpers;

@@ -28,12 +28,26 @@ const sess = {
     })
 };
 
-sequelize.sync({ force: true }).then(async () => {
-    if (process.env.SEED_DB === 'true') {
-        await seedDatabase();
-        console.log('Database seeding completed!');
-    }
-});
+// async function main() {
+//     // automated seeding!
+//     if (process.env.SEED_DB === 'true') {
+//         try {
+//             await seedDatabase();
+//         } catch (error) {
+//             console.error('Error during database seeding:', error);
+//         }
+//     }
+
+//     init();
+// }
+
+
+// sequelize.sync({ force: true }).then(async () => {
+//     if (process.env.SEED_DB === 'true') {
+//         await seedDatabase();
+//         console.log('Database seeding completed!');
+//     }
+// });
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
@@ -51,3 +65,5 @@ sequelize.sync({ force: false }).then(async () => {
     }
     app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
 }).catch(err => console.error('Error syncing database:', err));
+
+// main();

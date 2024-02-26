@@ -2,12 +2,12 @@
   <h1>My Dashboard</h1>
 </header>
 <section>
-  <a href="/posts/new">Create New Post</a>
+  <a href="/blogs/new">Create New Post</a>
   {{#each userPosts as |post|}}
     <article>
       <h2>{{post.title}}</h2>
-      <button><a href="/posts/edit/{{post.id}}">Edit</a></button>
-      <button><a href="/posts/delete/{{post.id}}">Delete</a></button>
+      <button><a href="/blogs/edit/{{post.id}}">Edit</a></button>
+      <button><a href="/blogs/delete/{{post.id}}">Delete</a></button>
     </article>
   {{/each}}
 </section>
