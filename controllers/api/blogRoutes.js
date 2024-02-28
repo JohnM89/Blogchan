@@ -132,5 +132,9 @@ router.put('/blogs/downvote/:id', withAuth, async (req, res) => {
     }
 });
 
+router.use((req, res) => {
+  res.send("<h1>Wrong Route!</h1>")
+});
+
 
 module.exports = router;

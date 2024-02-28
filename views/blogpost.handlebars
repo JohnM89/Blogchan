@@ -1,7 +1,8 @@
 {{#each posts}}
-    <article>
-        <h2><a href="/blogs/{{this.id}}">{{this.title}}</a></h2>
-        <p>{{this.summary}}</p>
-        <a href="/blogs/{{this.id}}" class="read-more-btn">Read More</a>
-    </article>
+<article>
+    <h2><a href="/blogs/{{this.id}}">{{this.title}}</a></h2>
+    <p>{{this.summary}}</p>
+    <a href="/blogs/{{this.id}}" class="read-more-btn">Read More</a>
+</article>
+{{log this}}
 {{/each}}

@@ -16,10 +16,6 @@ User.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        fname: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
         username: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -27,9 +23,9 @@ User.init(
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                len: [8],
-            },
+            // validate: {
+            //     len: [8],
+            // },
         },
         date_joined: {
             type: DataTypes.DATE,
@@ -57,4 +53,4 @@ User.init(
 );
 
 
-module.exports = User;
+module.exports =  User;
