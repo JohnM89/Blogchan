@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { BlogPost, Comment, User } = require('../models/index.js');
 
-// Existing route to render the home page
+// Route to render the home page
 router.get('/', async (req, res) => {
   try {
     const blogPostData = await BlogPost.findAll();
@@ -10,9 +10,9 @@ router.get('/', async (req, res) => {
 
     res.render('homepage', {
       posts,
-      loggedIn: req.session.loggedIn, 
+      loggedIn: req.session.loggedIn,
       pageTitle: 'Home - BlogChan',
-      stylesheets: '/css/style.css', 
+      stylesheets: '/css/style.css',
       javascripts: '/js/script.js'
     });
   } catch (err) {
@@ -27,7 +27,7 @@ router.get('/blogs/new', (req, res) => {
     res.render('newPost', {
       loggedIn: req.session.loggedIn,
       pageTitle: 'Create New Post - BlogChan',
-      stylesheets: '/css/style.css', 
+      stylesheets: '/css/style.css',
       javascripts: '/js/script.js'
     });
   } catch (err) {
@@ -36,25 +36,25 @@ router.get('/blogs/new', (req, res) => {
   }
 });
 
-// Existing route to view a specific blog post
+// Route to view a specific blog post
 router.get('/blogs/:id', async (req, res) => {
-    try {
-        const blogPostData = await BlogPost.findByPk(req.params.id, {
-            include: [{ model: Comment, attributes: ['id', 'comment_text', 'createdAt', 'userId', 'upVotes', 'downVotes'] }],
-        });
+  try {
+    const blogPostData = await BlogPost.findByPk(req.params.id, {
+      include: [{ model: Comment, attributes: ['id', 'comment_text', 'createdAt', 'userId', 'upVotes', 'downVotes'] }],
+    });
 
-        if (!blogPostData) {
-            return res.status(404).send('Post not found');
-        }
-
-        res.render('blogpost', {
-            post: blogPostData.get({ plain: true }),
-            loggedIn: req.session.loggedIn 
-        });
-    } catch (err) {
-        console.error('Error fetching blog post:', err);
-        res.status(500).send('Server error');
+    if (!blogPostData) {
+      return res.status(404).send('Post not found');
     }
+
+    res.render('blogpost', {
+      post: blogPostData.get({ plain: true }),
+      loggedIn: req.session.loggedIn
+    });
+  } catch (err) {
+    console.error('Error fetching blog post:', err);
+    res.status(500).send('Server error');
+  }
 });
 
 // Route to handle sign-up form submission
@@ -99,7 +99,7 @@ router.get('/signup', (req, res) => {
 
   res.render('signup', {
     pageTitle: 'Sign Up - BlogChan',
-    stylesheet: '/css/style.css', 
+    stylesheet: '/css/style.css',
     javascript: '/js/script.js'
   });
 });
@@ -113,7 +113,7 @@ router.get('/signin', (req, res) => {
 
   res.render('signin', {
     pageTitle: 'Sign In - BlogChan',
-    stylesheets: '/css/style.css', 
+    stylesheets: '/css/style.css',
     javascripts: '/js/script.js'
   });
 });
