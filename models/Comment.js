@@ -28,12 +28,13 @@ Comment.init({
         allowNull: false,
         defaultValue: 0,
     },
-      userId: {
-    type: DataTypes.INTEGER, // Assuming userId is an integer
-    allowNull: false
-  },
+//       userId: {
+//     type: DataTypes.INTEGER, // Assuming userId is an integer
+//     allowNull: false
+//   },
     authorId: {
         type: DataTypes.INTEGER,
+        allowNull: false,
         references: {
             model: 'user',
             key: 'id',
@@ -57,6 +58,10 @@ Comment.associate = (models) => {
     Comment.belongsTo(models.BlogPost, {
         foreignKey: 'blogPostId',
     });
+    Comment.belongsTo(models.User, {
+        foreignKey: 'authorId',
+    });
+    
 };
 
 module.exports = Comment;

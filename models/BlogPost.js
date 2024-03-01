@@ -24,6 +24,10 @@ BlogPost.init({
         allowNull: false,
         defaultValue: 0,
     },
+    // fname: {
+    //     type: DataTypes.STRING,
+    //     allowNull: false,
+    // },
     content: {
         type: DataTypes.TEXT,
         allowNull: false,
@@ -45,6 +49,9 @@ authorId: {
 BlogPost.associate = (models) => {
     BlogPost.hasMany(models.Comment, {
         foreignKey: 'blogPostId',
+    });
+    BlogPost.belongsTo(models.User, {
+        foreignKey: 'authorId',
     });
 };
 
