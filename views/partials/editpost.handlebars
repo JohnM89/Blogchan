@@ -1,3 +1,6 @@
+(if ../user)
+    <a href="/blogs/{{post.id}}">View Post</a>
+    <a href="/blogs/delete/{{post.id}}">Delete Post</a>
 <form action="/blogs/update/{{post.id}}" method="POST">
     <label for="edit-title-{{post.id}}">Title:</label>
     <input type="text" id="edit-title-{{post.id}}" name="title" value="{{post.title}}" required>
@@ -7,3 +10,4 @@
 
     <button type="submit">Update Post</button>
 </form>
+{{/if}}

@@ -1,15 +1,85 @@
 <article>
     <h2><a href="/blogs/{{id}}">{{title}}</a></h2>
-    <p>{{truncate body 100}}</p>
-    {{#if userCanEdit}}
-        <button onclick="toggleEditForm('post', {{this.id}})">Edit</button>
-        <div id="edit-post-form-{{this.id}}" style="display: none;">
-            {{> editPost post=this}}
-            
-        </div>
-    {{/if}}
+    <p>{{content}}</p>
+    <p>{{post.content}}</p>
+    <p>Upvotes: {{post.upVotes}}, Downvotes: {{post.downVotes}}</p>
+    <p>Posted on: {{post.date}}</p>
 </article>
 
+{{!-- {{#if loggedIn}}
+<h2>Create a New Blog Post</h2>
+<form action="/blogs" method="post">
+    <input type="text" name="title" placeholder="Title" required>
+    <textarea name="content" placeholder="Content" required></textarea>
+    <button type="submit">Create Post</button>
+</form>
+<hr>
+{{/if}} --}}
+
 {{#if loggedIn}}
-    <button onclick="redirectToNewPostPage()">New Post</button>
+    <a href="/blogs/edit/{{post.id}}">Edit</a>
+    <form action="/blogs/{{post.id}}?_method=DELETE" method="POST">
+        <button type="submit">Delete</button>
+    </form>
+{{/if}}
+
+{{#if loggedIn}}
+    <h3>Leave a Comment</h3>
+    <form action="/comments/new/{{post.id}}" method="post">
+        <textarea name="commentText" required></textarea>
+        <button type="submit">Submit Comment</button>
+    </form>
+{{/if}}
+
+
+
+
+{{!-- {{#if post.Comments}}
+    <h3>Comments</h3>
+    <ul>
+        {{#each post.Comments as |comment|}}
+            <li>
+                <p>{{comment.commentText}}</p>
+                <p>Posted by: User {{comment.authorId}} on {{comment.dateCreated}}</p>
+                <p>Upvotes: {{comment.upVotes}}, Downvotes: {{comment.downVotes}}</p>
+                {{#if loggedIn}}
+                    <a href="/comments/edit/{{comment.id}}">Edit</a>
+                    <form action="/comments/{{comment.id}}?_method=DELETE" method="POST">
+                        <button type="submit">Delete</button>
+                    </form>
+                {{/if}}
+            </li>
+        {{/each}}
+    </ul>
+{{else}}
+    <p>No comments yet. Be the first to comment!</p>
+{{/if}} --}}
+
+{{#if post.Comments}}
+    <section>
+        <h2>Comments</h2>
+        <ul>
+            {{#each post.Comments as |comment|}}
+                <li>
+                    <p>{{comment.commentText}}</p>
+                    <p>Posted by: User {{comment.authorId}} on {{comment.dateCreated}}</p>
+                    <p>Upvotes: {{comment.upVotes}}, Downvotes: {{comment.downVotes}}</p>
+                </li>
+            {{/each}}
+        </ul>
+    </section>
+{{else}}
+    <p>No comments yet. Be the first to comment!</p>
+{{/if}}
+
+{{#if loggedIn}}
+    <!-- Assuming you have a route and form setup for submitting comments -->
+    <section>
+        <h3>Leave a Comment</h3>
+        <form action="/path-to-submit-comment" method="post">
+            <textarea name="commentText" required></textarea>
+            <input type="hidden" name="blogPostId" value="{{post.id}}">
+            <button type="submit">Submit Comment</button>
+        </form>
+    </section>
 {{/if}}

@@ -6,7 +6,8 @@ const { BlogPost, Comment, User } = require('../models/index.js');
 router.get('/', async (req, res) => {
   try {
     const blogPostData = await BlogPost.findAll();
-    const posts = blogPostData.map(post => post.get({ plain: true }));
+    
+const posts = blogPostData.map(post => post.get({ plain: true }));
 
     res.render('homepage', {
       posts,
@@ -24,8 +25,8 @@ router.get('/', async (req, res) => {
 // Route to render the page for creating a new blog post
 router.get('/blogs/new', (req, res) => {
   try {
-    res.render('blogpost', {
-      loggedIn: req.session.loggedIn,
+    res.render('newpost', {
+      loggedIn: req.session.logged_in || true,
       pageTitle: 'Create New Post - BlogChan',
       stylesheets: '/css/style.css',
       javascripts: '/js/script.js'
@@ -48,6 +49,7 @@ router.get('/blogs/:id', async (req, res) => {
     }
 
     res.render('blogpost', {
+      loggedIn: req.session.logged_in || true,
       post: blogPostData.get({ plain: true }),
       loggedIn: req.session.loggedIn
     });

@@ -4,7 +4,10 @@ const router = require('express').Router();
 const { BlogPost, Comment } = require('../../models'); 
 const withAuth = require('../../utils/auth'); 
 
-router.get('/blogs/:id', async (req, res) => {
+
+
+
+router.get('/blogs', async (req, res) => {
     try {
         console.log("GET /blogs/:id");
         
@@ -34,26 +37,31 @@ router.get('/blogs/:id', async (req, res) => {
     }
 });
 
-router.get('/blogs/edit/:id', withAuth, async (req, res) => {
+// Corrected route for fetching a specific blog post by ID
+router.get('/blogs/:id', withAuth, async (req, res) => {
     try {
-        console.log("GET /blogs/edit/:id");
-        
-        const blogPostData = await BlogPost.findByPk(req.params.id);
+        const blogPostData = await BlogPost.findByPk(req.params.id, {
+            include: [
+                { model: Comment, include: [{ model: User, attributes: ['username'] }] },
+                { model: User, attributes: ['username'] }
+            ],
+        });
+
         if (blogPostData) {
             const blogPost = blogPostData.get({ plain: true });
             res.render('blogpost', {
                 blogPost,
-                editing: true,
-                loggedIn: req.session.logged_in
+                loggedIn: req.session.logged_in 
             });
         } else {
-            res.status(404).json({ message: 'No post found with this id' });
+            res.status(404).send('No post found with this id');
         }
     } catch (err) {
         console.error(err);
-        res.status(500).json(err);
+        res.status(500).send('Server error');
     }
 });
+
 
 
 router.get('/blogs/new', withAuth, (req, res) => {
@@ -63,26 +71,25 @@ router.get('/blogs/new', withAuth, (req, res) => {
     
 
 
-    res.render('blogpost', {
+    res.render('newpost', {
         loggedIn: req.session.logged_in
     });
 });
 
+// Create a new blog post
 router.post('/blogs', withAuth, async (req, res) => {
     try {
-        console.log("POST /blogs");
-        res.render
-        
         const newBlogPost = await BlogPost.create({
             ...req.body,
-            userId: req.session.userId 
+            userId: req.session.authorId // Ensure this matches your session variable
         });
-        res.status(200).json(newBlogPost);
+        res.redirect('/blogs/' + newBlogPost.id); // Redirect to the new post's page
     } catch (err) {
         console.error(err);
-        res.status(500).json(err);
+        res.status(500).send('Unable to create post');
     }
 });
+
 
 
 router.delete('/blogs/:id', withAuth, async (req, res) => {

@@ -1,9 +1,14 @@
-<form action="/blogs/newpost/{{post.id}}" method="POST">
-    <label for="edit-title-{{post.id}}">Title:</label>
-    <input type="text" id="edit-title-{{post.id}}" name="title" value="{{post.title}}" required>
+{{#if loggedIn}}
+    <h2>Create a New Blog Post</h2>
+    <form action="/blogs" method="post">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+        
+        <label for="content">Content:</label>
+        <textarea id="content" name="content" required></textarea>
+        
+        <button action="/" type="submit">Post</button>
 
-    <label for="edit-body-{{post.id}}">Content:</label>
-    <textarea id="edit-body-{{post.id}}" name="body" required>{{post.body}}</textarea>
 
-    <button type="submit">Update Post</button>
-</form>
+    </form>
+{{/if}}
