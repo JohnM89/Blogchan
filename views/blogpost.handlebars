@@ -1,8 +1,35 @@
-{{#each posts}}
-<article>
-    <h2><a href="/blogs/{{this.id}}">{{this.title}}</a></h2>
-    <p>{{this.summary}}</p>
-    <a href="/blogs/{{this.id}}" class="read-more-btn">Read More</a>
-</article>
-{{log this}}
-{{/each}}
+{{!-- Check if editing or creating a new post --}}
+{{#if blogPost}}
+    {{!-- Editing or Viewing a Blog Post --}}
+    <h1>{{blogPost.title}}</h1>
+    <article>{{blogPost.content}}</article>
+
+    {{#if editing}}
+        {{!-- Blog Post Editing Form --}}
+        <form action="/blogs/{{blogPost.id}}" method="post">
+            <input type="hidden" name="_method" value="PUT" /> {{!-- For PUT method --}}
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" value="{{blogPost.title}}">
+            
+            <label for="content">Content:</label>
+            <textarea id="content" name="content">{{blogPost.content}}</textarea>
+            
+            <button type="submit">Update Post</button>
+        </form>
+    {{else}}
+        {{!-- View Mode Only, Add Edit Button --}}
+        <a href="/blogs/edit/{{blogPost.id}}">Edit Post</a>
+    {{/if}}
+{{else}}
+    {{!-- Creating a New Blog Post --}}
+    <h1>Create New Post</h1>
+    <form action="/blogs" method="post">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title">
+        
+        <label for="content">Content:</label>
+        <textarea id="content" name="content"></textarea>
+        
+        <button type="submit">Create Post</button>
+    </form>
+{{/if}}

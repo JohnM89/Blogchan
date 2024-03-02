@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 // Route to render the page for creating a new blog post
 router.get('/blogs/new', (req, res) => {
   try {
-    res.render('newPost', {
+    res.render('blogpost', {
       loggedIn: req.session.loggedIn,
       pageTitle: 'Create New Post - BlogChan',
       stylesheets: '/css/style.css',
@@ -40,7 +40,7 @@ router.get('/blogs/new', (req, res) => {
 router.get('/blogs/:id', async (req, res) => {
   try {
     const blogPostData = await BlogPost.findByPk(req.params.id, {
-      include: [{ model: Comment, attributes: ['id', 'comment_text', 'createdAt', 'userId', 'upVotes', 'downVotes'] }],
+      include: [{ model: Comment, attributes: ['id', 'commentText', 'dateCreated', 'authorId', 'upVotes', 'downVotes'] }],
     });
 
     if (!blogPostData) {

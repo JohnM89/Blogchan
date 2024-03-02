@@ -5,6 +5,7 @@
         <button onclick="toggleEditForm('post', {{this.id}})">Edit</button>
         <div id="edit-post-form-{{this.id}}" style="display: none;">
             {{> editPost post=this}}
+            
         </div>
     {{/if}}
 </article>

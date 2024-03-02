@@ -11,7 +11,10 @@ router.get('/blogs/:id', async (req, res) => {
         const blogPostData = await BlogPost.findByPk(req.params.id, {
             include: [{
                 model: Comment,
-                attributes: ['id', 'comment_text', 'createdAt', 'authorId', 'upVotes', 'downVotes'],
+                attributes: ['id', 'commentText', 'dateCreated', 'authorId', 'upVotes', 'downVotes'],
+                include: [{ model: User, attributes: ['username'] }]
+            },
+            { model: User, attributes: ['username']
                 
             }],
         });
@@ -38,8 +41,9 @@ router.get('/blogs/edit/:id', withAuth, async (req, res) => {
         const blogPostData = await BlogPost.findByPk(req.params.id);
         if (blogPostData) {
             const blogPost = blogPostData.get({ plain: true });
-            res.render('editPost', {
+            res.render('blogpost', {
                 blogPost,
+                editing: true,
                 loggedIn: req.session.logged_in
             });
         } else {
@@ -54,8 +58,12 @@ router.get('/blogs/edit/:id', withAuth, async (req, res) => {
 
 router.get('/blogs/new', withAuth, (req, res) => {
     console.log("GET /blogs/new");
+
+
     
-    res.render('newPost', {
+
+
+    res.render('blogpost', {
         loggedIn: req.session.logged_in
     });
 });
@@ -63,6 +71,7 @@ router.get('/blogs/new', withAuth, (req, res) => {
 router.post('/blogs', withAuth, async (req, res) => {
     try {
         console.log("POST /blogs");
+        res.render
         
         const newBlogPost = await BlogPost.create({
             ...req.body,
