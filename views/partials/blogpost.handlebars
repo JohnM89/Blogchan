@@ -22,6 +22,7 @@
             </ul>
             <form action="/comment" method="post">
                 <textarea name="commentText" required></textarea>
+                <input type="hidden" name="blogPostId" value="{{id}}">
                 <button type="submit">Submit Comment</button>
             </form>
         </section>
