@@ -105,6 +105,11 @@ router.post('/blogs', async (req, res) => {
 
 // Route to handle comment form submission
 router.post('/comment', async (req, res) => {
+
+  if (!req.session.loggedIn) {
+    console.log("User not logged in");
+    return res.status(401).send('You need to be logged in to comment');
+  }
   try {
     const newComment = await Comment.create({
       ...req.body,

@@ -23,6 +23,7 @@ Comment.init({
         allowNull: true,
         defaultValue: 0,
     },
+
     downVotes: {
         type: DataTypes.INTEGER,
         allowNull: true,
@@ -42,6 +43,7 @@ Comment.init({
     },
     blogPostId: {
         type: DataTypes.INTEGER,
+        allowNull: true,
         references: {
             model: 'blogPost',
             key: 'id',
