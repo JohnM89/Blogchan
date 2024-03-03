@@ -18,6 +18,13 @@ router.post('/', withAuth, async (req, res) => {
   }
 });
 
+// Route to render new blog post form
+router.get('/new', withAuth, async (req, res) => {
+  res.render('new-post', {
+    loggedIn: req.session.loggedIn
+  });
+});
+
 
 // Update a blog post
 router.put('/:id', withAuth, async (req, res) => {

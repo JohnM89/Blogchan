@@ -11,10 +11,12 @@ router.post('/', withAuth, async (req, res) => {
       userId: req.session.userId,
     });
     console.log("New comment added:", newComment.toJSON()); // Assuming Sequelize model instance
-    res.status(200).json(newComment);
+    // res.status(200).json(newComment);
+    res.redirect('/'); // Redirect back to the homepage
   } catch (err) {
     console.error("Error adding new comment:", err);
     res.status(400).json(err);
+    res.redirect('/'); // Redirect back to the homepage
   }
 });
 

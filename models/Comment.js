@@ -16,16 +16,16 @@ Comment.init({
     },
     dateCreated: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
     },
     upVotes: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         defaultValue: 0,
     },
     downVotes: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         defaultValue: 0,
     },
 //       userId: {
@@ -34,7 +34,7 @@ Comment.init({
 //   },
     authorId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: 'user',
             key: 'id',

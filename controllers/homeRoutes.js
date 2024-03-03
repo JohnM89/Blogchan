@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { BlogPost, Comment, User } = require('../models/index.js');
+const withAuth = require('../utils/auth');
 
 // Route to render the home page
 router.get('/', async (req, res) => {
@@ -25,6 +26,8 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+
 
 // Route to render the page for creating a new blog post
 router.get('/blogs/new', (req, res) => {
@@ -83,6 +86,23 @@ router.post('/signup', async (req, res) => {
   }
 });
 
+// Route to handle blog post form submission
+router.post('/blogs', async (req, res) => {
+  try {
+    const newBlogPost = await BlogPost.create({
+      ...req.body,
+      userId: req.session.userId,
+    });
+    console.log("New Blog Post Added:", newBlogPost);
+
+    // res.status(200).json(newBlogPost);
+    res.redirect('/');
+  } catch (err) {
+    console.error('Error adding new blog post:', err);
+    res.status(400).json(err);
+  }
+});
+
 // Route to handle comment form submission
 router.post('/comment', async (req, res) => {
   try {
@@ -92,12 +112,15 @@ router.post('/comment', async (req, res) => {
     });
     console.log("New Comment Added:", newComment);
 
-    res.status(200).json(newComment);
+    // res.status(200).json(newComment);
+    res.redirect('/');
   } catch (err) {
     console.error('Error adding new comment:', err);
     res.status(400).json(err);
   }
 });
+
+
 
 // Route to handle sign-in form submission
 router.post('/signin', async (req, res) => {

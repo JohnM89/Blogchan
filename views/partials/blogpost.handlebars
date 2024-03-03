@@ -20,14 +20,14 @@
                     <li>{{comment.commentText}} - {{comment.dateCreated}}</li>
                 {{/each}}
             </ul>
-            <form action="/comments/{{id}}" method="post">
+            <form action="/comment" method="post">
                 <textarea name="commentText" required></textarea>
                 <button type="submit">Submit Comment</button>
             </form>
         </section>
     {{else}}
         <p>No comments yet. Be the first to comment!</p>
-                    <form action="/comments/{{id}}" method="post">
+                    <form action="/comment/" method="post">
                 <textarea name="commentText" required></textarea>
                 <button type="submit">Submit Comment</button>
             </form>
