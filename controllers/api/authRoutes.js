@@ -1,72 +1,64 @@
 const router = require('express').Router();
 const { User } = require('../../models');
 
-// Render the sign-up page or redirect if already logged in
-router.get('/signup', (req, res) => {
-  if (req.session.logged_in) {
-    res.redirect('/');
-  } else {
-    res.render('signup', {
-      pageTitle: 'Sign Up - BlogChan',
-      stylesheet: '/css/style.css',
-      javascript: '/js/script.js',
-    });
-  }
-});
-
-// Handle the sign-up form submission
+// Sign-up new user
 router.post('/signup', async (req, res) => {
   try {
+    console.log("Attempting to sign up with:", req.body);
     const userData = await User.create(req.body);
-    req.session.user_id = userData.id;
-    req.session.logged_in = true;
+    console.log("User signed up:", userData.toJSON()); // Assuming Sequelize model instance
     req.session.save(() => {
-      res.redirect('/');
+      req.session.userId = userData.id;
+      req.session.loggedIn = true;
+      console.log("Session saved for sign up:", req.session);
+      res.status(200).json(userData);
     });
   } catch (err) {
-    console.error(err);
-    res.redirect('/signup?error=signupFailed');
+    console.error("Sign-up error:", err);
+    res.status(400).json(err);
   }
 });
 
-// Render the sign-in page or redirect if already logged in
-router.get('/signin', (req, res) => {
-  if (req.session.logged_in) {
-    res.redirect('/');
-  } else {
-    res.render('signin', {
-      pageTitle: 'Sign In - BlogChan',
-      stylesheets: '/css/style.css',
-      javascripts: '/js/script.js',
-    });
-  }
-});
-
-// Handle the sign-in form submission
+// Sign-in
 router.post('/signin', async (req, res) => {
   try {
+    console.log("Attempting to sign in with email:", req.body.email);
     const userData = await User.findOne({ where: { email: req.body.email } });
-    if (!userData || !(await userData.checkPassword(req.body.password))) {
-      return res.redirect('/signin?error=invalidCredentials');
+    if (!userData) {
+      console.log("No user found with that email");
+      res.status(400).json({ message: 'Incorrect email or password, please try again' });
+      return;
     }
-    req.session.user_id = userData.id;
-    req.session.logged_in = true;
+
+    const validPassword = await userData.checkPassword(req.body.password);
+    if (!validPassword) {
+      console.log("Password check failed");
+      res.status(400).json({ message: 'Incorrect email or password, please try again' });
+      return;
+    }
+
     req.session.save(() => {
-      res.redirect('/');
+      req.session.userId = userData.id;
+      req.session.loggedIn = true;
+      console.log("Session saved for sign in:", req.session);
+      res.json({ user: userData, message: 'You are now logged in!' });
     });
   } catch (err) {
-    console.error(err);
-    res.redirect('/signin?error=loginFailed');
+    console.error("Sign-in error:", err);
+    res.status(500).json(err);
   }
 });
 
-// Handle sign-out
+// Sign-out
 router.post('/signout', (req, res) => {
-  if (req.session.logged_in) {
+  if (req.session.loggedIn) {
+    console.log("Signing out user:", req.session.userId);
     req.session.destroy(() => {
-      res.redirect('/');
+      console.log("Session destroyed for sign out");
+      res.status(204).end();
     });
   } else {
+    console.log("No session to destroy for sign out");
     res.status(404).end();
   }
 });

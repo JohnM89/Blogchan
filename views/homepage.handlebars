@@ -1,9 +1,10 @@
 <header>
     <h1>Welcome to the Blog!</h1>
+    <p>Click a title to navigate to the blog post!</p>
     <nav>
         {{#if loggedIn}}
             <a href="/signout">Sign Out</a>
-            <a href="/blogs/new">Create New Post</a>
+            <button><a href="/blogs/new">Create a New Blog Post</a></button>
         {{else}}
             <a href="/signin">Sign In</a>
             <a href="/signup">Sign Up</a>
@@ -13,7 +14,9 @@
 <section>
     {{#each posts}}
         {{> blogpost}}
+        
     {{/each}}
+
 </section>
 <footer>
     <p>&copy; 2024 BlogChan</p>

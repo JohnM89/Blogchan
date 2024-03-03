@@ -1,156 +1,67 @@
-console.log("Executing blogRoutes.js");
-
 const router = require('express').Router();
-const { BlogPost, Comment } = require('../../models'); 
-const withAuth = require('../../utils/auth'); 
-
-
-
-
-router.get('/blogs', async (req, res) => {
-    try {
-        console.log("GET /blogs/:id");
-        
-        const blogPostData = await BlogPost.findByPk(req.params.id, {
-            include: [{
-                model: Comment,
-                attributes: ['id', 'commentText', 'dateCreated', 'authorId', 'upVotes', 'downVotes'],
-                include: [{ model: User, attributes: ['username'] }]
-            },
-            { model: User, attributes: ['username']
-                
-            }],
-        });
-
-        if (blogPostData) {
-            const blogPost = blogPostData.get({ plain: true });
-            res.render('blogpost', {
-                blogPost,
-                loggedIn: req.session.logged_in 
-            });
-        } else {
-            res.status(404).json({ message: 'No post found with this id' });
-        }
-    } catch (err) {
-        console.error(err);
-        res.status(500).json(err);
-    }
-});
-
-// Corrected route for fetching a specific blog post by ID
-router.get('/blogs/:id', withAuth, async (req, res) => {
-    try {
-        const blogPostData = await BlogPost.findByPk(req.params.id, {
-            include: [
-                { model: Comment, include: [{ model: User, attributes: ['username'] }] },
-                { model: User, attributes: ['username'] }
-            ],
-        });
-
-        if (blogPostData) {
-            const blogPost = blogPostData.get({ plain: true });
-            res.render('blogpost', {
-                blogPost,
-                loggedIn: req.session.logged_in 
-            });
-        } else {
-            res.status(404).send('No post found with this id');
-        }
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Server error');
-    }
-});
-
-
-
-router.get('/blogs/new', withAuth, (req, res) => {
-    console.log("GET /blogs/new");
-
-
-    
-
-
-    res.render('newpost', {
-        loggedIn: req.session.logged_in
-    });
-});
+const { BlogPost } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 // Create a new blog post
-router.post('/blogs', withAuth, async (req, res) => {
-    try {
-        const newBlogPost = await BlogPost.create({
-            ...req.body,
-            userId: req.session.authorId // Ensure this matches your session variable
-        });
-        res.redirect('/blogs/' + newBlogPost.id); // Redirect to the new post's page
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Unable to create post');
+router.post('/', withAuth, async (req, res) => {
+  console.log("Attempting to create post with data:", req.body);
+  try {
+    const newPost = await BlogPost.create({
+      ...req.body,
+      userId: req.session.userId,
+    });
+    console.log("New post created:", newPost);
+    res.status(200).json(newPost);
+  } catch (err) {
+    console.error("Error creating new post:", err);
+    res.status(400).json(err);
+  }
+});
+
+// Update a blog post
+router.put('/:id', withAuth, async (req, res) => {
+  console.log(`Attempting to update post ${req.params.id} with data:`, req.body);
+  try {
+    const postData = await BlogPost.update(req.body, {
+      where: {
+        id: req.params.id,
+        userId: req.session.userId,
+      },
+    });
+    if (postData[0] === 0) { // Sequelize update returns an array where the first element is the number of rows affected
+      console.log("No post found with this id for update:", req.params.id);
+      res.status(404).json({ message: 'No post found with this id' });
+      return;
     }
+    console.log("Post updated:", postData);
+    res.status(200).json(postData);
+  } catch (err) {
+    console.error("Error updating post:", err);
+    res.status(500).json(err);
+  }
 });
 
-
-
-router.delete('/blogs/:id', withAuth, async (req, res) => {
-    try {
-        console.log("DELETE /blogs/:id");
-        
-        const blogPostData = await BlogPost.destroy({
-            where: {
-                id: req.params.id,
-                userId: req.session.userId 
-            }
-        });
-
-        if (blogPostData) {
-            res.status(200).json({ message: 'Post successfully deleted' });
-        } else {
-            res.status(404).json({ message: 'No post found with this id' });
-        }
-    } catch (err) {
-        console.error(err);
-        res.status(500).json(err);
+// Delete a blog post
+router.delete('/:id', withAuth, async (req, res) => {
+  console.log(`Attempting to delete post ${req.params.id}`);
+  try {
+    const postData = await BlogPost.destroy({
+      where: {
+        id: req.params.id,
+        userId: req.session.userId,
+      },
+    });
+    if (!postData) { // Sequelize destroy returns the number of rows affected. 0 indicates no row was deleted.
+      console.log("No post found with this id for deletion:", req.params.id);
+      res.status(404).json({ message: 'No post found with this id' });
+      return;
     }
+    console.log("Post deleted:", req.params.id);
+    res.status(200).json({ message: 'Post successfully deleted' });
+  } catch (err) {
+    console.error("Error deleting post:", err);
+    res.status(500).json(err);
+  }
 });
-
-router.put('/blogs/upvote/:id', withAuth, async (req, res) => {
-    try {
-        console.log("PUT /blogs/upvote/:id");
-        
-        const post = await BlogPost.findByPk(req.params.id);
-        if (post) {
-            post.upvotes += 1;
-            await post.save();
-            res.status(200).json(post);
-        } else {
-            res.status(404).json({ message: 'Post not found' });
-        }
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
-
-router.put('/blogs/downvote/:id', withAuth, async (req, res) => {
-    try {
-        console.log("PUT /blogs/downvote/:id");
-        
-        const post = await BlogPost.findByPk(req.params.id);
-        if (post) {
-            post.downvotes += 1;
-            await post.save();
-            res.status(200).json(post);
-        } else {
-            res.status(404).json({ message: 'Post not found' });
-        }
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
-
-router.use((req, res) => {
-  res.send("<h1>Wrong Route!</h1>")
-});
-
 
 module.exports = router;

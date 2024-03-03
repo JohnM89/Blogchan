@@ -1,50 +1,38 @@
 <h1>All Blog Posts</h1>
 
-<article>
-    <h2><a href="/blogs/{{id}}">{{title}}</a></h2>
-    <p>{{content}}</p>
-    <p>{{post.content}}</p>
-    <p>Upvotes: {{post.upVotes}}, Downvotes: {{post.downVotes}}</p>
-    <p>Posted on: {{post.date}}</p>
-</article>
-
-        {{#if ../loggedIn}}
-            <a href="/blogs/edit/{{this.id}}">Edit</a>
-            <form action="/blogs/{{this.id}}?_method=DELETE" method="POST">
-                <button type="submit">Delete</button>
-            </form>
-        {{/if}}
-    </div>
-
-
+{{!-- Loop through each post --}}
 {{#each posts}}
-    <div class="post">
-        <h2>{{this.id}}</h2>
-        <p>{{this.title}}</p>
-        <p>{{this.content}}</p>
-        
-        
-        <!-- Displaying comments for each post -->
-        {{#if this.Comments}}
-            <h3>Comments</h3>
-            <ul>
-                {{#each this.Comments as |comment|}}
-                    <li>{{comment.User.username}} says: {{comment.commentText}}</li>
-                {{/each}}
-            </ul>
-        {{/if}}
+<article>
+    <h2><a href="/blogs/{{this.id}}">{{this.title}}</a></h2>
+    <p>{{this.content}}</p>
+    <p>👍: {{this.upVotes}}, 👎: {{this.downVotes}}</p>
+    <p>Posted on: {{this.date}}</p> <!-- Assuming 'date' is formatted appropriately -->
 
-        <!-- Edit and Delete options -->
-        {{#if ../loggedIn}}
-            <a href="/blogs/edit/{{this.id}}">Edit</a>
-            <form action="/blogs/{{this.id}}?_method=DELETE" method="POST">
-                <button type="submit">Delete</button>
-            </form>
-        {{/if}}
-    </div>
+    {{!-- Conditional check for comments on the post --}}
+    {{#if this.Comments}}
+      <section>
+        <h3>Comments</h3>
+        <ul>
+          {{#each this.Comments as |comment|}}
+            <li>{{comment.User.username}} says: {{comment.commentText}}</li>
+          {{/each}}
+        </ul>
+      </section>
+    {{else}}
+        <p>No comments yet. Be the first to comment!</p>
+    {{/if}}
+
+    {{!-- Conditional rendering for logged-in users --}}
+    {{#if ../loggedIn}}
+        <a href="/blogs/edit/{{this.id}}">Edit</a>
+        <form action="/blogs/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit">Delete</button>
+        </form>
+    {{/if}}
+</article>
 {{/each}}
 
-{{!-- Form to create a new blog post --}}
+{{!-- Form to create a new blog post, shown only if logged in --}}
 {{#if loggedIn}}
     <h2>Create a New Blog Post</h2>
     <form action="/blogs" method="post">
@@ -55,7 +43,5 @@
         <textarea id="content" name="content" required></textarea>
         
         <button type="submit">Post</button>
-        <a href="/">Post</a>
-        
     </form>
 {{/if}}

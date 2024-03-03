@@ -5,9 +5,13 @@ const { BlogPost, Comment, User } = require('../models/index.js');
 // Route to render the home page
 router.get('/', async (req, res) => {
   try {
-    const blogPostData = await BlogPost.findAll();
+    const blogPostData = await BlogPost.findAll({
+  include: [{ model: Comment }]
+});
+    console.log("Fetched Blog Posts:", blogPostData);
     
-const posts = blogPostData.map(post => post.get({ plain: true }));
+    const posts = blogPostData.map(post => post.get({ plain: true }));
+    console.log("Mapped Posts for Rendering:", posts);
 
     res.render('homepage', {
       posts,
@@ -25,7 +29,8 @@ const posts = blogPostData.map(post => post.get({ plain: true }));
 // Route to render the page for creating a new blog post
 router.get('/blogs/new', (req, res) => {
   try {
-    res.render('newpost', {
+    console.log("Rendering New Post Page:", req.session.logged_in);
+    res.render('blogpost', {
       loggedIn: req.session.logged_in || true,
       pageTitle: 'Create New Post - BlogChan',
       stylesheets: '/css/style.css',
@@ -43,8 +48,10 @@ router.get('/blogs/:id', async (req, res) => {
     const blogPostData = await BlogPost.findByPk(req.params.id, {
       include: [{ model: Comment, attributes: ['id', 'commentText', 'dateCreated', 'authorId', 'upVotes', 'downVotes'] }],
     });
+    console.log("Fetched Blog Post Data:", blogPostData);
 
     if (!blogPostData) {
+      console.log("No Blog Post Found:", req.params.id);
       return res.status(404).send('Post not found');
     }
 
@@ -63,12 +70,15 @@ router.get('/blogs/:id', async (req, res) => {
 router.post('/signup', async (req, res) => {
   try {
     const userData = await User.create(req.body);
+    console.log("User Signed Up:", userData);
+    
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.loggedIn = true;
-      res.status(200).json(userData);
+      res.redirect('/');
     });
   } catch (err) {
+    console.error('Signup Error:', err);
     res.status(400).json(err);
   }
 });
@@ -77,17 +87,22 @@ router.post('/signup', async (req, res) => {
 router.post('/signin', async (req, res) => {
   try {
     const userData = await User.findOne({ where: { email: req.body.email } });
+    console.log("User Signing In:", userData);
 
     if (!userData || !await userData.checkPassword(req.body.password)) {
-      return res.status(400).json({ message: 'Incorrect email or password, please try again' });
+      console.log("Sign-in Failed: Invalid credentials");
+      return res.redirect('/signin?error=loginFailed');
     }
 
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.loggedIn = true;
-      res.json({ user: userData, message: 'You are now logged in!' });
+      console.log("User Logged In:", req.session.user_id);
+      res.redirect('/');
+      // res.json({ user: userData, message: 'You are now logged in!' }); // This line seems redundant since you're redirecting anyway
     });
   } catch (err) {
+    console.error('Sign-in Error:', err);
     res.status(400).json(err);
   }
 });
@@ -95,10 +110,12 @@ router.post('/signin', async (req, res) => {
 // Route to render the sign-up page
 router.get('/signup', (req, res) => {
   if (req.session.loggedIn) {
+    console.log("Redirecting Logged In User from Signup to Home");
     res.redirect('/');
     return;
   }
 
+  console.log("Rendering Signup Page");
   res.render('signup', {
     pageTitle: 'Sign Up - BlogChan',
     stylesheet: '/css/style.css',
@@ -109,10 +126,12 @@ router.get('/signup', (req, res) => {
 // Route to render the sign-in page
 router.get('/signin', (req, res) => {
   if (req.session.loggedIn) {
+    console.log("Redirecting Logged In User from Signin to Home");
     res.redirect('/');
     return;
   }
 
+  console.log("Rendering Signin Page");
   res.render('signin', {
     pageTitle: 'Sign In - BlogChan',
     stylesheets: '/css/style.css',
