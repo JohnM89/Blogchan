@@ -3,32 +3,34 @@
     <p>{{content}}</p>
     <p>👍: {{upVotes}}, 👎: {{downVotes}}</p>
     <p>Posted on: {{date}}</p> <!-- Ensure 'date' is formatted as needed -->
+    
+    {{!-- Edit and Delete buttons for logged-in users --}}
+    {{#if loggedIn}}
+        <a href="/blogs/{{id}}">Edit</a>
+        <form action="/blogs/{{id}}?_method=DELETE" method="POST">
+            <button type="submit">Delete</button>
+        </form>
+    {{/if}}
 
+    {{!-- Comments section --}}
     {{#if comments}}
-    <section>
-        <h2>Comments</h2>
-        <ul>
-            {{#each comments as |comment|}}
-            <li>{{comment.commentText}} - {{comment.dateCreated}}</li>
-            {{/each}}
-        </ul>
-    </section>
+        <section>
+            <h2>Comments</h2>
+            <ul>
+                {{#each comments as |comment|}}
+                    <li>{{comment.commentText}} - {{comment.dateCreated}}</li>
+                {{/each}}
+            </ul>
+            <form action="/comments/{{id}}" method="post">
+                <textarea name="commentText" required></textarea>
+                <button type="submit">Submit Comment</button>
+            </form>
+        </section>
     {{else}}
-    <p>No comments yet. Be the first to comment!</p>
+        <p>No comments yet. Be the first to comment!</p>
+                    <form action="/comments/{{id}}" method="post">
+                <textarea name="commentText" required></textarea>
+                <button type="submit">Submit Comment</button>
+            </form>
     {{/if}}
 </article>
-
-
-{{!-- Conditional sections for logged-in users --}}
-{{#if loggedIn}}
-    <a href="/blogs/edit/{{id}}">Edit</a>
-    <form action="/blogs/{{id}}?_method=DELETE" method="POST">
-        <button type="submit">Delete</button>
-    </form>
-
-    <h3>Leave a Comment</h3>
-    <form action="/comments/new/{{id}}" method="post">
-        <textarea name="commentText" required></textarea>
-        <button type="submit">Submit Comment</button>
-    </form>
-{{/if}}

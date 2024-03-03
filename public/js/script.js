@@ -64,11 +64,11 @@
 //     $('.delete-comment-btn').on('click', function() { deleteComment($(this).data('id')); });
 // });
 
-const posts = blogPostData.map(post => {
-  const plainPost = post.get({ plain: true });
-  return {
-    ...plainPost,
-    date: plainPost.createdAt.toLocaleDateString('en-US'), // Example date formatting
-  };
-});
-console.log(posts); // Check the structure and values
+// const posts = blogPostData.map(post => {
+//   const plainPost = post.get({ plain: true });
+//   return {
+//     ...plainPost,
+//     date: plainPost.createdAt.toLocaleDateString('en-US'), // Example date formatting
+//   };
+// });
+// console.log(posts); // Check the structure and values

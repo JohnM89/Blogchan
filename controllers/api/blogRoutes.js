@@ -8,15 +8,16 @@ router.post('/', withAuth, async (req, res) => {
   try {
     const newPost = await BlogPost.create({
       ...req.body,
-      userId: req.session.userId,
+      userId: req.session.userId, // Make sure this aligns with your authentication logic
     });
     console.log("New post created:", newPost);
-    res.status(200).json(newPost);
+    res.redirect('/'); // Redirect back to the homepage
   } catch (err) {
     console.error("Error creating new post:", err);
     res.status(400).json(err);
   }
 });
+
 
 // Update a blog post
 router.put('/:id', withAuth, async (req, res) => {

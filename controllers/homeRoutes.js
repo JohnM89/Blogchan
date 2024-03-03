@@ -83,6 +83,22 @@ router.post('/signup', async (req, res) => {
   }
 });
 
+// Route to handle comment form submission
+router.post('/comment', async (req, res) => {
+  try {
+    const newComment = await Comment.create({
+      ...req.body,
+      userId: req.session.userId,
+    });
+    console.log("New Comment Added:", newComment);
+
+    res.status(200).json(newComment);
+  } catch (err) {
+    console.error('Error adding new comment:', err);
+    res.status(400).json(err);
+  }
+});
+
 // Route to handle sign-in form submission
 router.post('/signin', async (req, res) => {
   try {
@@ -99,7 +115,6 @@ router.post('/signin', async (req, res) => {
       req.session.loggedIn = true;
       console.log("User Logged In:", req.session.user_id);
       res.redirect('/');
-      // res.json({ user: userData, message: 'You are now logged in!' }); // This line seems redundant since you're redirecting anyway
     });
   } catch (err) {
     console.error('Sign-in Error:', err);
@@ -107,10 +122,10 @@ router.post('/signin', async (req, res) => {
   }
 });
 
-// Route to render the sign-up page
 router.get('/signup', (req, res) => {
   if (req.session.loggedIn) {
     console.log("Redirecting Logged In User from Signup to Home");
+    res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.redirect('/');
     return;
   }
@@ -122,6 +137,7 @@ router.get('/signup', (req, res) => {
     javascript: '/js/script.js'
   });
 });
+
 
 // Route to render the sign-in page
 router.get('/signin', (req, res) => {
