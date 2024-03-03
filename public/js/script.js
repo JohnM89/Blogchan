@@ -68,7 +68,7 @@
 //   const plainPost = post.get({ plain: true });
 //   return {
 //     ...plainPost,
-//     date: plainPost.createdAt.toLocaleDateString('en-US'), // Example date formatting
+//     date: plainPost.createdAt.toLocaleDateString('en-US'),
 //   };
 // });
-// console.log(posts); // Check the structure and values
+// console.log(posts); 

@@ -2,9 +2,8 @@
     <h2><a href="/blogs/{{id}}">{{title}}</a></h2>
     <p>{{content}}</p>
     <p>👍: {{upVotes}}, 👎: {{downVotes}}</p>
-    <p>Posted on: {{date}}</p> <!-- Ensure 'date' is formatted as needed -->
+    <p>Posted on: {{date}}</p>
     
-    {{!-- Edit and Delete buttons for logged-in users --}}
     {{#if loggedIn}}
         <a href="/blogs/{{id}}">Edit</a>
         <form action="/blogs/{{id}}?_method=DELETE" method="POST">
