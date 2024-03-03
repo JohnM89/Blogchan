@@ -91,7 +91,7 @@ router.post('/blogs', async (req, res) => {
   try {
     const newBlogPost = await BlogPost.create({
       ...req.body,
-      authorId: req.session.authorId,
+      userId: req.session.userId,
     });
     console.log("New Blog Post Added:", newBlogPost);
 
@@ -108,7 +108,7 @@ router.post('/comment', async (req, res) => {
   try {
     const newComment = await Comment.create({
       ...req.body,
-      authorId: req.session.authorId,
+      userId: req.session.userId,
     });
     console.log("New Comment Added:", newComment);
 
