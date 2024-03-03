@@ -36,7 +36,7 @@ router.get('/blogs/new', (req, res) => {
     res.render('blogpost', {
       loggedIn: req.session.logged_in || true,
       pageTitle: 'Create New Post - BlogChan',
-      stylesheets: '/css/style.css',
+      stylesheets: 'public/css/style.css',
       javascripts: '/js/script.js'
     });
   } catch (err) {
@@ -125,6 +125,45 @@ router.post('/comment', async (req, res) => {
   }
 });
 
+// Route to handle upVote button click
+router.put('/upvote/:id', async (req, res) => {
+  try {
+    const blogPostData = await BlogPost.findByPk(req.params.id);
+    if (!blogPostData) {
+      console.log("No Blog Post Found:", req.params.id);
+      return res.status(404).send('Post not found');
+    }
+
+    blogPostData.upVotes++;
+    await blogPostData.save();
+    console.log("Blog Post Upvoted:", blogPostData);
+
+    res.status(200).json(blogPostData);
+  } catch (err) {
+    console.error('Error upvoting blog post:', err);
+    res.status(500).json(err);
+  }
+});
+
+// Route to handle downVote button click
+router.put('/downvote/:id', async (req, res) => {
+  try {
+    const blogPostData = await BlogPost.findByPk(req.params.id);
+    if (!blogPostData) {
+      console.log("No Blog Post Found:", req.params.id);
+      return res.status(404).send('Post not found');
+    }
+
+    blogPostData.downVotes++;
+    await blogPostData.save();
+    console.log("Blog Post Downvoted:", blogPostData);
+
+    res.status(200).json(blogPostData);
+  } catch (err) {
+    console.error('Error downvoting blog post:', err);
+    res.status(500).json(err);
+  }
+});
 
 
 // Route to handle sign-in form submission
@@ -161,7 +200,7 @@ router.get('/signup', (req, res) => {
   console.log("Rendering Signup Page");
   res.render('signup', {
     pageTitle: 'Sign Up - BlogChan',
-    stylesheet: '/css/style.css',
+    stylesheet: './css/style.css',
     javascript: '/js/script.js'
   });
 });

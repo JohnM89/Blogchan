@@ -1,7 +1,9 @@
 <article>
     <h2><a "/blogs/{{id}}">{{title}}</a></h2>
     <p>{{content}}</p>
-    <p>👍: {{upVotes}}, 👎: {{downVotes}}</p>
+    <p><a href="/upvote/{{id}}" method="POST">👍</a> {{upVotes}} | {{downVotes}} <a href="/downvote/{{id}}" method="POST">👎</a>
+    </p>
+
     <p>Posted on: {{date}}</p>
     
     {{#if loggedIn}}

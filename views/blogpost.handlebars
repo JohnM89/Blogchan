@@ -24,6 +24,7 @@
     {{!-- Conditional rendering for logged-in users --}}
     {{#if ../loggedIn}}
         <a href="/blogs/edit/{{this.id}}">Edit</a>
+        <input type="hidden" name="authorId" value="{{../authorId}}">
         <form action="/blogs/{{this.id}}?_method=DELETE" method="POST">
             <button type="submit">Delete</button>
         </form>
