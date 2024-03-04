@@ -92,3 +92,13 @@ footer {
     text-align: center;
     color: rgba(255, 255, 255, 0.8); /* Ensuring text color is visible */
 }
+
+.vote-buttons {
+  display: flex;
+
+}
+
+.vote-buttons form {
+  margin: 0 10px; /* Add some space between the forms */
+}
+

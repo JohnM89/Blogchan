@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
     {
       model: User,
       attributes: ['username']
-    }
+    },
   ]
 });
     console.log("Fetched Blog Posts:", blogPostData);
@@ -149,16 +149,19 @@ router.put('/upvote/:id', async (req, res) => {
     if (!blogPostData) {
       console.log("No Blog Post Found:", req.params.id);
       return res.status(404).send('Post not found');
+      
     }
 
     blogPostData.upVotes++;
     await blogPostData.save();
     console.log("Blog Post Upvoted:", blogPostData);
 
-    res.status(200).json(blogPostData);
+    // res.status(200).json(blogPostData);
+    res.redirect('/');
   } catch (err) {
     console.error('Error upvoting blog post:', err);
-    res.status(500).json(err);
+    // res.status(500).json(err);
+    res.redirect('/');
   }
 });
 
@@ -175,10 +178,12 @@ router.put('/downvote/:id', async (req, res) => {
     await blogPostData.save();
     console.log("Blog Post Downvoted:", blogPostData);
 
-    res.status(200).json(blogPostData);
+    // res.status(200).json(blogPostData);
+    res.redirect('/');
   } catch (err) {
     console.error('Error downvoting blog post:', err);
-    res.status(500).json(err);
+    // res.status(500).json(err);
+    res.redirect('/');
   }
 });
 

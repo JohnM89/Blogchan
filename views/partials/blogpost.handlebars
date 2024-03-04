@@ -1,16 +1,24 @@
 <article>
     <h2><a "/blogs/{{id}}">{{title}}</a></h2>
     <p>By: {{user.username}} </p>
+    <p>Date: {{date}} </p>
     <p>{{content}}</p>
-    <p><a href="/upvote/{{id}}" method="POST">👍</a> {{upVotes}} | {{downVotes}} <a href="/downvote/{{id}}" method="POST">👎</a>
-    </p>
+<div class="vote-buttons">
+  <form action="/upvote/{{id}}?_method=PUT" method="POST">
+    <button type="submit">👍 {{upVotes}}</button> 
+  </form>
+  <form action="/downvote/{{id}}?_method=PUT" method="POST">
+    <button type="submit">👎 {{downVotes}}</button>
+  </form>
+</div>
+
 
     <p>Posted on: {{date}}</p>
     
     {{#if loggedIn}}
         <a href="/blogs/{{id}}">Edit</a>
         <form action="/blogs/{{id}}?_method=DELETE" method="POST">
-  <button type="submit">Delete</button>
+        <button type="submit">Delete</button>
 </form>
 
     {{/if}}
@@ -21,7 +29,7 @@
             <h2>Comments</h2>
             <ul>
                 {{#each comments as |comment|}}
-                    <li>{{comment.commentText}} - {{comment.dateCreated}}</li>
+                    <li>{{comment.commentText}} - {{comment.dateCreated}} - {{date}} - {{user.username}}</li>
                 {{/each}}
             </ul>
             <form action="/comment" method="post">
