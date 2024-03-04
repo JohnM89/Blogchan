@@ -5,10 +5,6 @@ html, body {
     padding: 0;
     background-color: #11131c; /* Dark theme background */
     color: rgba(255, 255, 255, 0.8); /* Dark theme text color */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
 /* Global styles */
@@ -49,14 +45,13 @@ article {
     color: rgba(255, 255, 255, 0.8); /* Ensuring text color is visible */
 }
 
+article h2, article p {
+    margin-bottom: 10px;
+}
 
 /* Form styles */
 form {
     margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    width: 100%; /* Adjust based on layout */
-    align-items: center; /* Center form elements */
 }
 
 form label {
@@ -65,7 +60,29 @@ form label {
     color: rgba(255, 255, 255, 0.8); /* Ensuring label text is visible */
 }
 
-/* Adjusted input and button styles remain the same */
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form textarea {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    background-color: #2F313A; /* Dark theme input background */
+    border: 1px solid #1B1D26; /* Dark theme input border */
+    color: rgba(255, 255, 255, 0.8); /* Input text color */
+}
+
+form button {
+    padding: 5px 10px;
+    background-color: #4ac; /* Dark theme button background */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #369; /* Dark theme button hover background */
+}
 
 /* Footer styles */
 footer {
@@ -74,8 +91,4 @@ footer {
     background-color: #1B1D26; /* Dark theme footer background */
     text-align: center;
     color: rgba(255, 255, 255, 0.8); /* Ensuring text color is visible */
-    width: 100%; /* Full width */
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
 }

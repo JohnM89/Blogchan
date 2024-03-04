@@ -1,5 +1,6 @@
 <article>
     <h2><a "/blogs/{{id}}">{{title}}</a></h2>
+    <p>By: {{User.username}} </p>
     <p>{{content}}</p>
     <p><a href="/upvote/{{id}}" method="POST">👍</a> {{upVotes}} | {{downVotes}} <a href="/downvote/{{id}}" method="POST">👎</a>
     </p>
@@ -32,6 +33,7 @@
         <p>No comments yet. Be the first to comment!</p>
                     <form action="/comment" method="post">
                 <textarea name="commentText" required></textarea>
+                <input type="hidden" name="blogPostId" value="{{id}}">
                 <button type="submit">Submit Comment</button>
             </form>
     {{/if}}

@@ -7,7 +7,16 @@ const withAuth = require('../utils/auth');
 router.get('/', async (req, res) => {
   try {
     const blogPostData = await BlogPost.findAll({
-  include: [{ model: Comment }]
+  include: [
+    { 
+      model: Comment, 
+      include: [{ model: User, attributes: ['username'] }]
+    },
+    {
+      model: User,
+      attributes: ['username']
+    }
+  ]
 });
     console.log("Fetched Blog Posts:", blogPostData);
     
@@ -47,9 +56,16 @@ router.get('/blogs/new', (req, res) => {
 
 // Route to view a specific blog post
 router.get('/blogs/:id', async (req, res) => {
-  try {
+try {
     const blogPostData = await BlogPost.findByPk(req.params.id, {
-      include: [{ model: Comment, attributes: ['id', 'commentText', 'dateCreated', 'authorId', 'upVotes', 'downVotes'] }],
+      include: [{
+        model: Comment,
+        attributes: ['id', 'commentText', 'dateCreated', 'authorId', 'upVotes', 'downVotes'],
+        include: [{
+            model: User,
+            attributes: ['id', 'username'] // Assuming you want to include the user's ID and username
+        }]
+      }]
     });
     console.log("Fetched Blog Post Data:", blogPostData);
 
@@ -92,6 +108,16 @@ router.post('/blogs', async (req, res) => {
     const newBlogPost = await BlogPost.create({
       ...req.body,
       authorId: req.session.user_id,
+        include: [
+    { 
+      model: Comment, 
+      include: [{ model: User, attributes: ['username'] }]
+    },
+    {
+      model: User,
+      attributes: ['username']
+    }
+  ]
     });
     console.log("New Blog Post Added:", newBlogPost);
 
@@ -181,6 +207,7 @@ router.post('/signin', async (req, res) => {
       req.session.user_id = userData.id;
       req.session.loggedIn = true;
       console.log("User Logged In:", req.session.user_id);
+      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
       res.redirect('/');
     });
   } catch (err) {

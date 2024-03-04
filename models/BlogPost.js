@@ -35,10 +35,20 @@ BlogPost.init({
 authorId: {
     type: DataTypes.INTEGER,
     references: {
-        model: 'User', // Use the correct model name
-        key: 'id', // Use the correct column name
+        model: 'User', 
+        key: 'id',
     },
 },
+// authorUsername: {
+//     type: DataTypes.STRING,
+//     allowNull: true,
+//     references: {
+//         model: 'User',
+//         key: 'username',
+
+//     },
+    
+// },
 }, {
     sequelize,
     freezeTableName: true,
@@ -53,6 +63,10 @@ BlogPost.associate = (models) => {
     BlogPost.belongsTo(models.User, {
         foreignKey: 'authorId',
     });
+
+    // BlogPost.belongsTo(models.User, {
+    //     foreignKey: 'authorUsername',
+    // });
 };
 
 module.exports = BlogPost;

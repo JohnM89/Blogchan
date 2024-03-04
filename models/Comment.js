@@ -40,7 +40,17 @@ Comment.init({
             model: 'user',
             key: 'id',
         },
-    },
+
+    // authorUsername: {
+    //     type: DataTypes.STRING,
+    //     allowNull: true,
+    //     references: {
+    //         model: 'user',
+    //         key: 'username',
+            
+    //     },    
+    
+    // },
     blogPostId: {
         type: DataTypes.INTEGER,
         allowNull: true,
@@ -48,6 +58,7 @@ Comment.init({
             model: 'blogPost',
             key: 'id',
         },
+    },
     },
 }, {
     sequelize,
@@ -63,6 +74,10 @@ Comment.associate = (models) => {
     Comment.belongsTo(models.User, {
         foreignKey: 'authorId',
     });
+    // Comment.belongsTo(models.User, {
+    //     foreignKey: 'authorUsername',
+
+    // });
     
 };
 

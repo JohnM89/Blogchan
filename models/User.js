@@ -65,5 +65,9 @@ User.associate = (models) => {
         foreignKey: 'authorId',
     });
 
+    // User.hasMany(models.Comment, {
+    //     foreignKey: 'username',
+    // });
+
 };
 module.exports =  User;

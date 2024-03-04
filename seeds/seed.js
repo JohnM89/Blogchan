@@ -9,20 +9,23 @@ const commentData = require('./comment-seeds');
 
 const seedDatabase = async () => {
     try {
-        await sequelize.sync({ force: true });
+        await sequelize.sync({ force: false });
 
         await User.bulkCreate(userData, {
             individualHooks: true,
+            ignoreDuplicates: true,
             returning: true,
         });
 
         await BlogPost.bulkCreate(blogPostData, {
             individualHooks: true,
+            ignoreDuplicates: true,
             returning: true,
         });
 
         await Comment.bulkCreate(commentData, {
             individualHooks: true,
+            ignoreDuplicates: true,
             returning: true,
         });
 
