@@ -1,29 +1,26 @@
-/* Reset CSS */
 html,
 body {
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5; /* Light theme background */
-    color: #333; /* Light theme text color */
-    font-family: Arial, sans-serif; /* Use a sans-serif font */
-}
+    background-color: #f5f5f5; 
+    color: #333; 
+    font-family: Arial, sans-serif; 
 
-/* Global styles */
+
 a {
     text-decoration: none;
-    color: #0079d3; /* Link color */
+    color: #0079d3;
 }
 
 a:hover {
-    color: #0056b3; /* Link hover color */
+    color: #0056b3; 
 }
 
-/* Header styles */
 header {
-    background-color: #0079d3; /* Header background */
+    background-color: #0079d3; 
     padding: 20px;
-    color: #fff; /* Header text color */
+    color: #fff;
     text-align: center;
 }
 
@@ -38,15 +35,14 @@ nav {
 nav a,
 nav button {
     margin-right: 10px;
-    color: #fff; /* Link and button text color */
-}
+    color: #fff; 
 
 /* Article styles */
 article {
     margin-top: 20px;
-    border-top: 1px solid #ccc; /* Article border */
+    border-top: 1px solid #ccc; 
     padding-top: 20px;
-    color: #555; /* Article text color */
+    color: #555; 
     text-align: justify;
 }
 
@@ -55,7 +51,7 @@ article p {
     margin-bottom: 10px;
 }
 
-/* Form styles */
+
 form {
     margin-top: 20px;
 }
@@ -63,7 +59,7 @@ form {
 form label {
     display: block;
     margin-bottom: 5px;
-    color: #555; /* Label text color */
+    color: #555; 
 }
 
 form input[type="text"],
@@ -73,39 +69,39 @@ form textarea {
     width: 100%;
     padding: 5px;
     margin-bottom: 10px;
-    background-color: #fff; /* Input background */
-    border: 1px solid #ccc; /* Input border */
-    color: #333; /* Input text color */
+    background-color: #fff;
+    border: 1px solid #ccc; 
+    color: #333; 
 }
 
 form button {
     padding: 5px 10px;
-    background-color: #0079d3; /* Button background */
-    color: #fff; /* Button text color */
+    background-color: #0079d3; 
+    color: #fff; 
     border: none;
     cursor: pointer;
 }
 
 form button:hover {
-    background-color: #0056b3; /* Button hover background */
+    background-color: #0056b3; 
 }
 
 .vote-buttons {
-    margin-top: 10px; /* Add some space between the buttons and the form */
-    display: flex; /* Make the buttons display inline */
-    justify-content: flex-start; /* Align the buttons to the start */
-    align-items: center; /* Center the buttons vertically */
+    margin-top: 10px; 
+    display: flex; 
+    justify-content: flex-start; 
+    align-items: center; 
 }
 
 .vote-buttons form {
-    margin: 0 10px; /* Add some space between the forms */
+    margin: 0 10px; 
 }
 
 .comment.ok {
-    margin-top: 20px; /* Add space between the comment div and other elements */
+    margin-top: 20px; 
     padding: 10px;
-    background-color: #f5f5f5; /* Comment div background */
-    border: 1px solid #ccc; /* Comment div border */
-    color: #555; /* Comment div text color */
+    background-color: #f5f5f5; 
+    border: 1px solid #ccc; 
+    color: #555; 
     text-align: justify;
 }

@@ -36,26 +36,6 @@ const sess = {
     })
 };
 
-// async function main() {
-//     // automated seeding!
-//     if (process.env.SEED_DB === 'true') {
-//         try {
-//             await seedDatabase();
-//         } catch (error) {
-//             console.error('Error during database seeding:', error);
-//         }
-//     }
-
-//     init();
-// }
-
-
-// sequelize.sync({ force: true }).then(async () => {
-//     if (process.env.SEED_DB === 'true') {
-//         await seedDatabase();
-//         console.log('Database seeding completed!');
-//     }
-// });
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
@@ -63,6 +43,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session(sess));
+// for overriding post methods to use put and delete
 app.use(methodOverride('_method'));
 
 
