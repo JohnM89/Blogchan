@@ -1,3 +1,16 @@
-BlogChan
+# BlogChan
 
-Some kind of tech blog site 
+A simple & also broken blogging tech platform
+
+## Features
+- Signup and signin
+- Create, edit, and delete blog posts
+- Comment on posts
+- Upvote/downvote posts
+
+## Tech Stack
+- Node.js
+- Express.js
+- Sequelize
+- MySQL
+- Handlebars
