@@ -1,27 +1,30 @@
 /* Reset CSS */
-html, body {
+html,
+body {
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: #11131c; /* Dark theme background */
-    color: rgba(255, 255, 255, 0.8); /* Dark theme text color */
+    background-color: #f5f5f5; /* Light theme background */
+    color: #333; /* Light theme text color */
+    font-family: Arial, sans-serif; /* Use a sans-serif font */
 }
 
 /* Global styles */
 a {
     text-decoration: none;
-    color: rgba(133, 160, 173, 0.8); /* Dark theme link color */
+    color: #0079d3; /* Link color */
 }
 
 a:hover {
-    color: #fff; /* Dark theme link hover color */
+    color: #0056b3; /* Link hover color */
 }
 
 /* Header styles */
 header {
-    background-color: #1B1D26; /* Dark theme header background */
+    background-color: #0079d3; /* Header background */
     padding: 20px;
-    color: rgba(255, 255, 255, 0.8); /* Ensuring text color is visible */
+    color: #fff; /* Header text color */
+    text-align: center;
 }
 
 h1 {
@@ -32,20 +35,23 @@ nav {
     margin-top: 10px;
 }
 
-nav a, nav button {
+nav a,
+nav button {
     margin-right: 10px;
-    color: rgba(255, 255, 255, 0.8); /* Ensuring link and button text is visible */
+    color: #fff; /* Link and button text color */
 }
 
 /* Article styles */
 article {
     margin-top: 20px;
-    border-top: 1px solid #252730; /* Dark theme article border */
+    border-top: 1px solid #ccc; /* Article border */
     padding-top: 20px;
-    color: rgba(255, 255, 255, 0.8); /* Ensuring text color is visible */
+    color: #555; /* Article text color */
+    text-align: justify;
 }
 
-article h2, article p {
+article h2,
+article p {
     margin-bottom: 10px;
 }
 
@@ -57,7 +63,7 @@ form {
 form label {
     display: block;
     margin-bottom: 5px;
-    color: rgba(255, 255, 255, 0.8); /* Ensuring label text is visible */
+    color: #555; /* Label text color */
 }
 
 form input[type="text"],
@@ -67,38 +73,39 @@ form textarea {
     width: 100%;
     padding: 5px;
     margin-bottom: 10px;
-    background-color: #2F313A; /* Dark theme input background */
-    border: 1px solid #1B1D26; /* Dark theme input border */
-    color: rgba(255, 255, 255, 0.8); /* Input text color */
+    background-color: #fff; /* Input background */
+    border: 1px solid #ccc; /* Input border */
+    color: #333; /* Input text color */
 }
 
 form button {
     padding: 5px 10px;
-    background-color: #4ac; /* Dark theme button background */
-    color: #fff;
+    background-color: #0079d3; /* Button background */
+    color: #fff; /* Button text color */
     border: none;
     cursor: pointer;
 }
 
 form button:hover {
-    background-color: #369; /* Dark theme button hover background */
-}
-
-/* Footer styles */
-footer {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #1B1D26; /* Dark theme footer background */
-    text-align: center;
-    color: rgba(255, 255, 255, 0.8); /* Ensuring text color is visible */
+    background-color: #0056b3; /* Button hover background */
 }
 
 .vote-buttons {
-  display: flex;
-
+    margin-top: 10px; /* Add some space between the buttons and the form */
+    display: flex; /* Make the buttons display inline */
+    justify-content: flex-start; /* Align the buttons to the start */
+    align-items: center; /* Center the buttons vertically */
 }
 
 .vote-buttons form {
-  margin: 0 10px; /* Add some space between the forms */
+    margin: 0 10px; /* Add some space between the forms */
 }
 
+.comment.ok {
+    margin-top: 20px; /* Add space between the comment div and other elements */
+    padding: 10px;
+    background-color: #f5f5f5; /* Comment div background */
+    border: 1px solid #ccc; /* Comment div border */
+    color: #555; /* Comment div text color */
+    text-align: justify;
+}

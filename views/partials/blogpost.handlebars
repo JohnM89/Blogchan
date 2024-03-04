@@ -25,6 +25,7 @@
     {{#if comments}}
         <section>
             <h2>Comments</h2>
+            <div class="ok" >
             <ul>
                 {{#each comments as |comment|}}
                     <li>{{comment.commentText}} - {{comment.dateCreated}} - {{date}} - {{user.username}}</li>
@@ -35,6 +36,7 @@
                 <input type="hidden" name="blogPostId" value="{{id}}">
                 <button type="submit">Submit Comment</button>
             </form>
+            </div>
         </section>
     {{else}}
         <p>No comments yet. Be the first to comment!</p>
