@@ -1,4 +1,5 @@
 
+{{!-- Loop through each post --}}
 {{#each posts}}
 <article>
     <h2><a href="/blogs/{{this.id}}">{{this.title}}</a></h2>
@@ -6,7 +7,7 @@
     <p>👍: {{this.upVotes}}, 👎: {{this.downVotes}}</p>
     <p>Posted on: {{this.date}}</p> <!-- Assuming 'date' is formatted appropriately -->
 
-    
+    {{!-- Conditional check for comments on the post --}}
     {{#if this.Comments}}
       <section>
         <h3>Comments</h3>
@@ -20,7 +21,7 @@
         <p>No comments yet. Be the first to comment!</p>
     {{/if}}
 
-    
+    {{!-- Conditional rendering for logged-in users --}}
     {{#if ../loggedIn}}
         <a href="/blogs/edit/{{this.id}}">Edit</a>
         <input type="hidden" name="authorId" value="{{../authorId}}">
@@ -31,7 +32,7 @@
 </article>
 {{/each}}
 
-
+{{!-- Form to create a new blog post, shown only if logged in --}}
 {{#if loggedIn}}
     <h2>Create a New Blog Post</h2>
     <form action="/blogs" method="post">
@@ -39,7 +40,7 @@
         <input type="text" id="title" name="title" required>
         <input type="hidden" name="authorId" value="{{authorId}}">
         <input type="hidden" name="blogPostId" value="{{blogPostId}}">
-      
+        <label for="username" name="username" value="{{username}}" </label>
         
         <label for="content">Content:</label>
         <textarea id="content" name="content" required></textarea>
