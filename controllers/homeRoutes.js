@@ -3,7 +3,7 @@ const router = express.Router();
 const { BlogPost, Comment, User } = require('../models/index.js');
 const withAuth = require('../utils/auth');
 
-// Route to render the home page
+// route to render the home page
 router.get('/', async (req, res) => {
   try {
     const blogPostData = await BlogPost.findAll({
@@ -38,7 +38,7 @@ router.get('/', async (req, res) => {
 
 
 
-// Route to render the page for creating a new blog post
+// route to render the page for creating a new blog post
 router.get('/blogs/new', (req, res) => {
   try {
     console.log("Rendering New Post Page:", req.session.logged_in);
@@ -54,7 +54,7 @@ router.get('/blogs/new', (req, res) => {
   }
 });
 
-// Route to view a specific blog post
+// route to view a specific blog post
 router.get('/blogs/:id', async (req, res) => {
 try {
     const blogPostData = await BlogPost.findByPk(req.params.id, {
@@ -63,7 +63,7 @@ try {
         attributes: ['id', 'commentText', 'dateCreated', 'authorId', 'upVotes', 'downVotes'],
         include: [{
             model: User,
-            attributes: ['id', 'username'] // Assuming you want to include the user's ID and username
+            attributes: ['id', 'username'] 
         }]
       }]
     });
@@ -85,7 +85,7 @@ try {
   }
 });
 
-// Route to handle sign-up form submission
+// route to handle sign-up form submission
 router.post('/signup', async (req, res) => {
   try {
     const userData = await User.create(req.body);
@@ -102,7 +102,7 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-// Route to handle blog post form submission
+// route to handle blog post form submission
 router.post('/blogs', async (req, res) => {
   try {
     const newBlogPost = await BlogPost.create({
@@ -120,7 +120,7 @@ router.post('/blogs', async (req, res) => {
   }
 });
 
-// Route to handle comment form submission
+// route to handle comment form submission
 router.post('/comment', async (req, res) => {
 
   if (!req.session.loggedIn) {
@@ -142,7 +142,7 @@ router.post('/comment', async (req, res) => {
   }
 });
 
-// Route to handle upVote button click
+// route to handle upVote button click
 router.put('/upvote/:id', async (req, res) => {
   try {
     const blogPostData = await BlogPost.findByPk(req.params.id);
@@ -165,7 +165,7 @@ router.put('/upvote/:id', async (req, res) => {
   }
 });
 
-// Route to handle downVote button click
+// route to handle downVote button click
 router.put('/downvote/:id', async (req, res) => {
   try {
     const blogPostData = await BlogPost.findByPk(req.params.id);
@@ -188,7 +188,7 @@ router.put('/downvote/:id', async (req, res) => {
 });
 
 
-// Route to handle sign-in form submission
+// route to handle sign-in form submission
 router.post('/signin', async (req, res) => {
   try {
     const userData = await User.findOne({ where: { email: req.body.email } });
@@ -234,13 +234,13 @@ router.delete('/blogs/:id', withAuth, async (req, res) => {
     const deleted = await BlogPost.destroy({
       where: {
         id: req.params.id,
-        // Optionally ensure that the user deleting the post is the author
+        
         authorId: req.session.user_id,
       },
     });
 
     if (deleted) {
-      res.redirect('/'); // or some success response
+      res.redirect('/'); 
     } else {
       res.status(404).send('Post not found');
     }
@@ -253,7 +253,7 @@ router.delete('/blogs/:id', withAuth, async (req, res) => {
 
 
 
-// Route to render the sign-in page
+// route to render the sign-in page
 router.get('/signin', (req, res) => {
   if (req.session.loggedIn) {
     console.log("Redirecting Logged In User from Signin to Home");

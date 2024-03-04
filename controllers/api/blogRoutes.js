@@ -2,23 +2,23 @@ const router = require('express').Router();
 const { BlogPost } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-// Create a new blog post
+// create a new blog post
 router.post('/', withAuth, async (req, res) => {
   console.log("Attempting to create post with data:", req.body);
   try {
     const newPost = await BlogPost.create({
       ...req.body,
-      userId: req.session.userId, // Make sure this aligns with your authentication logic
+      userId: req.session.userId, 
     });
     console.log("New post created:", newPost);
-    res.redirect('/'); // Redirect back to the homepage
+    res.redirect('/'); 
   } catch (err) {
     console.error("Error creating new post:", err);
     res.status(400).json(err);
   }
 });
 
-// Route to render new blog post form
+// route to render new blog post form
 router.get('/new', withAuth, async (req, res) => {
   res.render('new-post', {
     loggedIn: req.session.loggedIn
@@ -26,7 +26,7 @@ router.get('/new', withAuth, async (req, res) => {
 });
 
 
-// Update a blog post
+// update a blog post
 router.put('/:id', withAuth, async (req, res) => {
   console.log(`Attempting to update post ${req.params.id} with data:`, req.body);
   try {
@@ -36,7 +36,7 @@ router.put('/:id', withAuth, async (req, res) => {
         userId: req.session.userId,
       },
     });
-    if (postData[0] === 0) { // Sequelize update returns an array where the first element is the number of rows affected
+    if (postData[0] === 0) { 
       console.log("No post found with this id for update:", req.params.id);
       res.status(404).json({ message: 'No post found with this id' });
       return;
@@ -49,7 +49,7 @@ router.put('/:id', withAuth, async (req, res) => {
   }
 });
 
-// Delete a blog post
+// delete a blog post
 router.delete('/:id', withAuth, async (req, res) => {
   console.log(`Attempting to delete post ${req.params.id}`);
   try {
@@ -59,7 +59,7 @@ router.delete('/:id', withAuth, async (req, res) => {
         userId: req.session.userId,
       },
     });
-    if (!postData) { // Sequelize destroy returns the number of rows affected. 0 indicates no row was deleted.
+    if (!postData) {
       console.log("No post found with this id for deletion:", req.params.id);
       res.status(404).json({ message: 'No post found with this id' });
       return;

@@ -1,12 +1,12 @@
 const router = require('express').Router();
 const { User } = require('../../models');
 
-// Sign-up new user
+// sign-up new user
 router.post('/signup', async (req, res) => {
   try {
     console.log("Attempting to sign up with:", req.body);
     const userData = await User.create(req.body);
-    console.log("User signed up:", userData.toJSON()); // Assuming Sequelize model instance
+    console.log("User signed up:", userData.toJSON()); 
     req.session.save(() => {
       req.session.userId = userData.id;
       req.session.loggedIn = true;
@@ -19,7 +19,7 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-// Sign-in
+// sign-in
 router.post('/signin', async (req, res) => {
   try {
     console.log("Attempting to sign in with email:", req.body.email);
@@ -49,7 +49,7 @@ router.post('/signin', async (req, res) => {
   }
 });
 
-// Sign-out
+// sign-out
 router.post('/signout', (req, res) => {
   if (req.session.loggedIn) {
     console.log("Signing out user:", req.session.userId);

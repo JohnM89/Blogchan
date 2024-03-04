@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-// Add a new comment
+// add a new comment
 router.post('/', withAuth, async (req, res) => {
   console.log("Attempting to add a new comment with data:", req.body);
   try {
@@ -10,17 +10,17 @@ router.post('/', withAuth, async (req, res) => {
       ...req.body,
       userId: req.session.userId,
     });
-    console.log("New comment added:", newComment.toJSON()); // Assuming Sequelize model instance
+    console.log("New comment added:", newComment.toJSON()); 
     // res.status(200).json(newComment);
-    res.redirect('/'); // Redirect back to the homepage
+    res.redirect('/'); 
   } catch (err) {
     console.error("Error adding new comment:", err);
     res.status(400).json(err);
-    res.redirect('/'); // Redirect back to the homepage
+    res.redirect('/'); 
   }
 });
 
-// Update a comment
+// update a comment
 router.put('/:id', withAuth, async (req, res) => {
   console.log(`Attempting to update comment ${req.params.id} with data:`, req.body);
   try {
@@ -30,7 +30,7 @@ router.put('/:id', withAuth, async (req, res) => {
         userId: req.session.userId,
       },
     });
-    if (commentData[0] === 0) { // Sequelize update returns an array where the first element is the number of rows affected
+    if (commentData[0] === 0) { 
       console.log("No comment found with this id for update:", req.params.id);
       res.status(404).json({ message: 'No comment found with this id' });
       return;
@@ -43,7 +43,7 @@ router.put('/:id', withAuth, async (req, res) => {
   }
 });
 
-// Delete a comment
+// delete a comment
 router.delete('/:id', withAuth, async (req, res) => {
   console.log(`Attempting to delete comment ${req.params.id}`);
   try {
@@ -53,7 +53,7 @@ router.delete('/:id', withAuth, async (req, res) => {
         userId: req.session.userId,
       },
     });
-    if (commentData === 0) { // Sequelize destroy returns the number of rows affected. 0 indicates no row was deleted.
+    if (commentData === 0) { 
       console.log("No comment found with this id for deletion:", req.params.id);
       res.status(404).json({ message: 'No comment found with this id' });
       return;
