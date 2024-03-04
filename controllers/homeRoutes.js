@@ -108,16 +108,7 @@ router.post('/blogs', async (req, res) => {
     const newBlogPost = await BlogPost.create({
       ...req.body,
       authorId: req.session.user_id,
-        include: [
-    { 
-      model: Comment, 
-      include: [{ model: User, attributes: ['username'] }]
-    },
-    {
-      model: User,
-      attributes: ['username']
-    }
-  ]
+      
     });
     console.log("New Blog Post Added:", newBlogPost);
 
@@ -232,6 +223,30 @@ router.get('/signup', (req, res) => {
   });
 });
 
+router.delete('/blogs/:id', withAuth, async (req, res) => {
+  try {
+    // Logic to delete the blog post
+    const deleted = await BlogPost.destroy({
+      where: {
+        id: req.params.id,
+        // Optionally ensure that the user deleting the post is the author
+        authorId: req.session.user_id,
+      },
+    });
+
+    if (deleted) {
+      res.redirect('/'); // or some success response
+    } else {
+      res.status(404).send('Post not found');
+    }
+  } catch (err) {
+    console.error('Error deleting blog post:', err);
+    res.status(500).send('Server error');
+  }
+});
+
+
+
 
 // Route to render the sign-in page
 router.get('/signin', (req, res) => {
@@ -248,5 +263,7 @@ router.get('/signin', (req, res) => {
     javascripts: '/js/script.js'
   });
 });
+
+
 
 module.exports = router;
