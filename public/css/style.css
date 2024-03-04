@@ -35,14 +35,15 @@ nav {
 nav a,
 nav button {
     margin-right: 10px;
-    color: #fff; 
+    color: #fff; /* Link and button text color */
+}
 
 /* Article styles */
 article {
     margin-top: 20px;
-    border-top: 1px solid #ccc; 
+    border-top: 1px solid #ccc; /* Article border */
     padding-top: 20px;
-    color: #555; 
+    color: #555; /* Article text color */
     text-align: justify;
 }
 
@@ -51,7 +52,7 @@ article p {
     margin-bottom: 10px;
 }
 
-
+/* Form styles */
 form {
     margin-top: 20px;
 }
@@ -59,7 +60,7 @@ form {
 form label {
     display: block;
     margin-bottom: 5px;
-    color: #555; 
+    color: #555; /* Label text color */
 }
 
 form input[type="text"],
@@ -69,39 +70,39 @@ form textarea {
     width: 100%;
     padding: 5px;
     margin-bottom: 10px;
-    background-color: #fff;
-    border: 1px solid #ccc; 
-    color: #333; 
+    background-color: #fff; /* Input background */
+    border: 1px solid #ccc; /* Input border */
+    color: #333; /* Input text color */
 }
 
 form button {
     padding: 5px 10px;
-    background-color: #0079d3; 
-    color: #fff; 
+    background-color: #0079d3; /* Button background */
+    color: #fff; /* Button text color */
     border: none;
     cursor: pointer;
 }
 
 form button:hover {
-    background-color: #0056b3; 
+    background-color: #0056b3; /* Button hover background */
 }
 
 .vote-buttons {
-    margin-top: 10px; 
-    display: flex; 
-    justify-content: flex-start; 
-    align-items: center; 
+    margin-top: 10px; /* Add some space between the buttons and the form */
+    display: flex; /* Make the buttons display inline */
+    justify-content: flex-start; /* Align the buttons to the start */
+    align-items: center; /* Center the buttons vertically */
 }
 
 .vote-buttons form {
-    margin: 0 10px; 
+    margin: 0 10px; /* Add some space between the forms */
 }
 
 .comment.ok {
-    margin-top: 20px; 
+    margin-top: 20px; /* Add space between the comment div and other elements */
     padding: 10px;
-    background-color: #f5f5f5; 
-    border: 1px solid #ccc; 
-    color: #555; 
+    background-color: #f5f5f5; /* Comment div background */
+    border: 1px solid #ccc; /* Comment div border */
+    color: #555; /* Comment div text color */
     text-align: justify;
 }
