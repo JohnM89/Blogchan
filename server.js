@@ -16,6 +16,8 @@ const PORT = process.env.PORT || 3001;
 const hbs = exphbs.create({ helpers });
 hbs.handlebars.registerPartial('blogpost', fs.readFileSync(__dirname + '/views/partials/blogpost.handlebars', 'utf8'));
 hbs.handlebars.registerPartial('comment', fs.readFileSync(__dirname + '/views/partials/comment.handlebars', 'utf8'));
+hbs.handlebars.registerPartial('editpost', fs.readFileSync(__dirname + '/views/partials/editpost.handlebars', 'utf8'));
+hbs.handlebars.registerPartial('deletepost', fs.readFileSync(__dirname + '/views/partials/deletepost.handlebars', 'utf8'));
 // // hbs.handlebars.registerPartial('editcomment', fs.readFileSync(__dirname + '/views/partials/editcomment.handlebars', 'utf8'));
 // hbs.handlebars.registerPartial('editpost', fs.readFileSync(__dirname + '/views/partials/editpost.handlebars', 'utf8'));
 // // hbs.handlebars.registerPartial('newpost', fs.readFileSync(__dirname + '/views/partials/newpost.handlebars', 'utf8'));

@@ -3,7 +3,9 @@
     <p>Sign in to make a blog post!</p>
     <nav>
         {{#if loggedIn}}
-            <a href="/signout">Sign Out</a>
+            <form action="/signout" method="post">
+        <button type="submit">Sign Out</button>
+        </form>
             <button><a href="/blogs/new">Create a New Blog Post</a></button>
         {{else}}
             <a href="/signin">Sign In</a>
@@ -25,13 +27,9 @@
   </form>
   
 </div>
-<form id="deleteForm" data-post-id="{{id}}" action="/blogs/{{id}}?_method=DELETE" method="POST">
-    <button type="submit">Delete</button>
-</form>
-<form id="editForm" data-post-id="{{id}}" action="/blogs/{{id}}?_method=PUT">
-    <button type="button" id="editButton">Edit</button> 
-</form>
-</div>
+{{> deletepost id=this.id}}
+{{> editpost id=this.id}}
+
         
     {{/each}}
        

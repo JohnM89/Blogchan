@@ -7,19 +7,19 @@ const withAuth = require('../utils/auth');
 router.get('/', async (req, res) => {
   try {
     const blogPostData = await BlogPost.findAll({
-  include: [
-    { 
-      model: Comment, 
-      include: [{ model: User, attributes: ['username'] }]
-    },
-    {
-      model: User,
-      attributes: ['username']
-    },
-  ]
-});
+      include: [
+        {
+          model: Comment,
+          include: [{ model: User, attributes: ['username'] }]
+        },
+        {
+          model: User,
+          attributes: ['username']
+        },
+      ]
+    });
     console.log("Fetched Blog Posts:", blogPostData);
-    
+
     const posts = blogPostData.map(post => post.get({ plain: true }));
     console.log("Mapped Posts for Rendering:", posts);
 
@@ -39,31 +39,70 @@ router.get('/', async (req, res) => {
 
 
 // route to render the page for creating a new blog post
-router.get('/blogs/new', (req, res) => {
+// router.get('/blogs/new', (req, res) => {
+//   try {
+//     console.log("Rendering New Post Page:", req.session.logged_in);
+//     res.render('blogpostnew', {
+//       loggedIn: req.session.logged_in || true,
+//       pageTitle: 'Create New Post - BlogChan',
+//       stylesheets: 'public/css/style.css',
+//       javascripts: '/js/script.js'
+//     });
+//   } catch (err) {
+//     console.error('Error rendering new post page:', err);
+//     res.status(500).json({ message: 'Internal server error' });
+//   }
+// });
+
+router.put('/blogs/:id', async (req, res) => {
   try {
-    console.log("Rendering New Post Page:", req.session.logged_in);
-    res.render('blogpostnew', {
-      loggedIn: req.session.logged_in || true,
-      pageTitle: 'Create New Post - BlogChan',
-      stylesheets: 'public/css/style.css',
-      javascripts: '/js/script.js'
-    });
+    await BlogPost.update(req.body, { where: { id: req.params.id } });
+    res.redirect('/'); // Redirect to the homepage or the edited post
   } catch (err) {
-    console.error('Error rendering new post page:', err);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: 'Error updating the post' });
   }
 });
 
+// Route to edit a blog post
+router.get('/blogs/new/:id?', async (req, res) => {
+  let postData = null;
+  if (req.params.id) {
+    // Edit mode
+    postData = await BlogPost.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+      ],
+    });
+    if (postData) {
+      postData = postData.get({ plain: true });
+    }
+  }
+
+
+
+  res.render('blogpostnew', {
+    postData, // Pass post data for editing
+    loggedIn: req.session.logged_in || true,
+    pageTitle: postData ? `Edit Post - BlogChan` : `Create New Post - BlogChan`,
+    stylesheets: '/css/style.css',
+    javascripts: '/js/script.js',
+  });
+});
+
+
 // route to view a specific blog post
 router.get('/blogs/:id', async (req, res) => {
-try {
+  try {
     const blogPostData = await BlogPost.findByPk(req.params.id, {
       include: [{
         model: Comment,
-        attributes: ['id', 'commentText', 'date', 'authorId', 'upVotes', 'downVotes'],
+        attributes: ['id', 'commentText', 'dateCreated', 'authorId', 'upVotes', 'downVotes'],
         include: [{
-            model: User,
-            attributes: ['id', 'username'] 
+          model: User,
+          attributes: ['id', 'username']
         }]
       }]
     });
@@ -90,7 +129,7 @@ router.post('/signup', async (req, res) => {
   try {
     const userData = await User.create(req.body);
     console.log("User Signed Up:", userData);
-    
+
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.loggedIn = true;
@@ -108,7 +147,7 @@ router.post('/blogs', async (req, res) => {
     const newBlogPost = await BlogPost.create({
       ...req.body,
       authorId: req.session.user_id,
-      
+
     });
     console.log("New Blog Post Added:", newBlogPost);
 
@@ -149,7 +188,7 @@ router.put('/upvote/:id', async (req, res) => {
     if (!blogPostData) {
       console.log("No Blog Post Found:", req.params.id);
       return res.status(404).send('Post not found');
-      
+
     }
 
     blogPostData.upVotes++;
@@ -228,19 +267,21 @@ router.get('/signup', (req, res) => {
   });
 });
 
-router.delete('/blogs/:id', withAuth, async (req, res) => {
+router.delete('/blogs/delete/:id', withAuth, async (req, res) => {
   try {
     // Logic to delete the blog post
     const deleted = await BlogPost.destroy({
       where: {
         id: req.params.id,
-        
+
+
+
         authorId: req.session.user_id,
       },
     });
 
     if (deleted) {
-      res.redirect('/'); 
+      res.redirect('/');
     } else {
       res.status(404).send('Post not found');
     }
@@ -269,6 +310,17 @@ router.get('/signin', (req, res) => {
   });
 });
 
-
+// route to handle sign-out
+router.post('/signout', (req, res) => {
+  if (req.session.loggedIn) {
+    req.session.destroy(() => {
+      console.log("User Logged Out");
+      res.redirect('/');
+    });
+  } else {
+    console.log("No User to Log Out");
+    res.status(404).end();
+  }
+});
 
 module.exports = router;
