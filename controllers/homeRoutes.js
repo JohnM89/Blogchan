@@ -236,6 +236,7 @@ router.post('/signin', async (req, res) => {
     if (!userData || !await userData.checkPassword(req.body.password)) {
       console.log("Sign-in Failed: Invalid credentials");
       return res.redirect('/signin?error=loginFailed');
+
     }
 
     req.session.save(() => {
@@ -244,6 +245,7 @@ router.post('/signin', async (req, res) => {
       console.log("User Logged In:", req.session.user_id);
       res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
       res.redirect('/');
+
     });
   } catch (err) {
     console.error('Sign-in Error:', err);
@@ -273,11 +275,14 @@ router.delete('/blogs/delete/:id', withAuth, async (req, res) => {
     const deleted = await BlogPost.destroy({
       where: {
         id: req.params.id,
-
-
-
         authorId: req.session.user_id,
       },
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+      ],
     });
 
     if (deleted) {
@@ -290,6 +295,7 @@ router.delete('/blogs/delete/:id', withAuth, async (req, res) => {
     res.status(500).send('Server error');
   }
 });
+
 
 
 
