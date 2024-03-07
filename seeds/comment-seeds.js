@@ -5,7 +5,7 @@ const commentData = [
     // userId: 1,
     upVotes: 50,
     downVotes: 1,
-    dateCreated: "2024-01-01T00:00:00.000Z",
+    dateCreated: "2024-01-01",
     blogPostId: 1
   },
   {
@@ -14,7 +14,7 @@ const commentData = [
     // userId: 2,
     upVotes: 100,
     downVotes: 0,
-    dateCreated: "2024-01-01T00:00:00.000Z",
+    dateCreated: "2024-01-01",
     blogPostId: 1
   }
 ];

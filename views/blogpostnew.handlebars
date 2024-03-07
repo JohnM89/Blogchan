@@ -1,4 +1,4 @@
-{{#each posts}}
+{{!-- {{#each posts}}
 <article>
     <h2><a href="/blogs/{{this.id}}">{{this.title}}</a></h2>
     <p>{{this.content}}</p>
@@ -16,9 +16,9 @@
       </section>
     {{else}}
         <p>No comments yet. Be the first to comment!</p>
-    {{/if}}
+    {{/if}} --}}
 
-    {{#if ../loggedIn}}
+    {{!-- {{#if ../loggedIn}}
         <a href="/blogs/edit/{{this.id}}">Edit</a>
         <input type="hidden" name="authorId" value="{{../authorId}}">
         <form action="/blogs/{{this.id}}?_method=DELETE" method="POST">
@@ -26,7 +26,7 @@
         </form>
     {{/if}}
 </article>
-{{/each}}
+{{/each}} --}}
 
 {{#if loggedIn}}
     <h2>Create a New Blog Post</h2>

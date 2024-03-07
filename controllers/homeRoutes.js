@@ -42,7 +42,7 @@ router.get('/', async (req, res) => {
 router.get('/blogs/new', (req, res) => {
   try {
     console.log("Rendering New Post Page:", req.session.logged_in);
-    res.render('blogpost', {
+    res.render('blogpostnew', {
       loggedIn: req.session.logged_in || true,
       pageTitle: 'Create New Post - BlogChan',
       stylesheets: 'public/css/style.css',
@@ -60,7 +60,7 @@ try {
     const blogPostData = await BlogPost.findByPk(req.params.id, {
       include: [{
         model: Comment,
-        attributes: ['id', 'commentText', 'dateCreated', 'authorId', 'upVotes', 'downVotes'],
+        attributes: ['id', 'commentText', 'date', 'authorId', 'upVotes', 'downVotes'],
         include: [{
             model: User,
             attributes: ['id', 'username'] 

@@ -12,11 +12,29 @@
     </nav>
 </header>
 <section>
+    <div>
     {{#each posts}}
         {{> blogpost}}
+        {{> comment}}
+        <div class="vote-buttons">
+  <form action="/upvote/{{id}}?_method=PUT" method="POST">
+    <button type="submit">👍 {{upVotes}}</button> 
+  </form>
+  <form action="/downvote/{{id}}?_method=PUT" method="POST">
+    <button type="submit">👎 {{downVotes}}</button>
+  </form>
+  
+</div>
+<form id="deleteForm" data-post-id="{{id}}" action="/blogs/{{id}}?_method=DELETE" method="POST">
+    <button type="submit">Delete</button>
+</form>
+<form id="editForm" data-post-id="{{id}}" action="/blogs/{{id}}?_method=PUT">
+    <button type="button" id="editButton">Edit</button> 
+</form>
+</div>
         
     {{/each}}
-
+       
 </section>
 <footer>
     <p>&copy; 2024 BlogChan</p>

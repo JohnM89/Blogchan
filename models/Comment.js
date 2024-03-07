@@ -17,6 +17,7 @@ Comment.init({
     dateCreated: {
         type: DataTypes.DATE,
         allowNull: true,
+        defaultValue: DataTypes.NOW,
     },
     upVotes: {
         type: DataTypes.INTEGER,
@@ -74,6 +75,7 @@ Comment.associate = (models) => {
     Comment.belongsTo(models.User, {
         foreignKey: 'authorId',
     });
+    
     // Comment.belongsTo(models.User, {
     //     foreignKey: 'authorUsername',
 

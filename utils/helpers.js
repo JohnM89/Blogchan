@@ -1,7 +1,9 @@
 const helpers = {
     format_date: (date) => {
-        return date.toLocaleDateString();
+    if (!date) return '';
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
     },
+
     format_amount: (amount) => {
         return parseInt(amount).toLocaleString();
     },

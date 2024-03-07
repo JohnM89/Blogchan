@@ -1,10 +1,20 @@
-{{#if blogPost.comments}}
-  <section>
-    <h3>Comments</h3>
+
+<section>
+    <h2>Comments</h2>
+    <div class="ok">
     <ul>
-      {{#each blogPost.comments as |comment|}}
-        <li>{{comment.commentText}} - {{comment.dateCreated}}</li>
-      {{/each}}
+        {{#each comments as |comment|}}
+            <li>{{comment.commentText}} - {{{format_date comment.dateCreated}}} - {{user.username}}</li>
+        {{/each}}
     </ul>
-  </section>
-{{/if}}
+    </div>
+    {{#if comments.length}}
+        {{else}}
+            <p>No comments yet. Be the first to comment!</p>
+    {{/if}}
+    <form action="/comment" method="post">
+        <textarea name="commentText" required></textarea>
+        <input type="hidden" name="blogPostId" value="{{id}}">
+        <button type="submit">Submit Comment</button>
+    </form>
+</section>
