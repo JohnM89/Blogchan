@@ -21,16 +21,13 @@ User.init(
             allowNull: false,
             unique: true,
         },
-          email: {
-    type: DataTypes.STRING, 
-    allowNull: false
-  },
+        email: {
+            type: DataTypes.STRING, 
+            allowNull: false
+        },
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-            // validate: {
-            //     len: [8],
-            // },
         },
         date_joined: {
             type: DataTypes.DATE,
@@ -53,7 +50,7 @@ User.init(
         timestamps: false, 
         freezeTableName: true,
         underscored: true,
-        modelName: 'user', 
+        modelName: 'User', 
     }
 );
 
@@ -64,10 +61,6 @@ User.associate = (models) => {
     User.hasMany(models.Comment, {
         foreignKey: 'authorId',
     });
-
-    // User.hasMany(models.Comment, {
-    //     foreignKey: 'username',
-    // });
-
 };
-module.exports =  User;
+
+module.exports = User;

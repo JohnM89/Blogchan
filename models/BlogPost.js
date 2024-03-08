@@ -11,9 +11,9 @@ BlogPost.init({
         autoIncrement: true,
     },
     date: {
-    type: DataTypes.DATE,
-    allowNull: true,
-    defaultValue: DataTypes.NOW,
+        type: DataTypes.DATE,
+        allowNull: true,
+        defaultValue: DataTypes.NOW,
     },
     title: {
         type: DataTypes.STRING,
@@ -29,36 +29,22 @@ BlogPost.init({
         allowNull: false,
         defaultValue: 0,
     },
-    // fname: {
-    //     type: DataTypes.STRING,
-    //     allowNull: false,
-    // },
     content: {
         type: DataTypes.TEXT,
         allowNull: false,
     },
-authorId: {
-    type: DataTypes.INTEGER,
-    references: {
-        model: 'User', 
-        key: 'id',
+    authorId: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'User', 
+            key: 'id',
+        },
     },
-},
-// authorUsername: {
-//     type: DataTypes.STRING,
-//     allowNull: true,
-//     references: {
-//         model: 'User',
-//         key: 'username',
-
-//     },
-    
-// },
 }, {
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: 'blogPost',
+    modelName: 'BlogPost',
 });
 
 BlogPost.associate = (models) => {
@@ -68,10 +54,6 @@ BlogPost.associate = (models) => {
     BlogPost.belongsTo(models.User, {
         foreignKey: 'authorId',
     });
-
-    // BlogPost.belongsTo(models.User, {
-    //     foreignKey: 'authorUsername',
-    // });
 };
 
 module.exports = BlogPost;
