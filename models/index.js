@@ -28,7 +28,7 @@ queryInterface.addConstraint('blogPost', {
   },
   onUpdate: 'CASCADE',
   onDelete: 'CASCADE',
-  name: 'custom_authorId_foreign_key_constraint' // Replace with your desired custom name
+  name: 'authorId' // Replace with your desired custom name
 });
 
 module.exports = db;
