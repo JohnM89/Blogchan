@@ -14,9 +14,11 @@
         {{/if}}
     </nav>
 </header>
-<section>
+<section >
     <div>
+        
     {{#each posts}}
+    <div class="main">
         {{> blogpost}}
 
     <div class="vote-buttons">
@@ -27,6 +29,8 @@
     <div class="comment-section">
         {{> comment}}
     </div>
+    </div>
+    
     
   
 
