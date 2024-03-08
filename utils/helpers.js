@@ -4,9 +4,6 @@ const helpers = {
     return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
     },
 
-    format_amount: (amount) => {
-        return parseInt(amount).toLocaleString();
-    },
     get_emoji: () => {
         const randomNum = Math.random();
 

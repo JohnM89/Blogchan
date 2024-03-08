@@ -222,7 +222,7 @@ router.put('/blogs/:id', async (req, res) => {
 module.exports = router;
 
 
-router.delete('/blogs/delete/:id', withAuth, async (req, res) => {
+router.delete('/blogs/delete/:id', async (req, res) => {
   try {
     // Logic to delete the blog post
     const deleted = await BlogPost.destroy({
@@ -241,11 +241,11 @@ router.delete('/blogs/delete/:id', withAuth, async (req, res) => {
     if (deleted) {
       res.redirect('/');
     } else {
-      res.status(404).send('Post not found');
+      res.render('signin', { message: 'You are not authorized to delete this post' } )
     }
   } catch (err) {
     console.error('Error deleting blog post:', err);
-    res.status(500).send('Server error');
+    res.redirect('/'); // Or to another appropriate route
   }
 });
 
