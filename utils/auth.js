@@ -15,7 +15,7 @@ const withAuth = (req, res, next) => {
         next(); 
     } else {
         console.log('User is not authenticated. Redirecting to login page...');
-        res.redirect('/login'); 
+        res.redirect('/signin'); 
     }
 };
 
