@@ -1,16 +1,11 @@
-const router = require('express').Router();
+const express = require('express');
+const router = express.Router();
 
 router.get('/', (req, res) => {
   res.send('API routes');
 });
 
 const blogRoutes = require('./blogRoutes');
-router.use('/blogs', blogRoutes);
-
-const commentRoutes = require('./commentRoutes');
-router.use('/comments', commentRoutes);
-
-const authRoutes = require('./authRoutes');
-router.use('/auth', authRoutes);
+router.use('/', blogRoutes); 
 
 module.exports = router;

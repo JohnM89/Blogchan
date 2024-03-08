@@ -1,8 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../config/connection'); // Adjust the path as necessary
-const User = require('./User');
-const BlogPost = require('./BlogPost');
-const Comment = require('./Comment');
+const sequelize = require('../config/connection');
 
 
 const db = {};

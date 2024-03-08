@@ -31,7 +31,7 @@ Comment.init({
         defaultValue: 0,
     },
     //       userId: {
-    //     type: DataTypes.INTEGER, // Assuming userId is an integer
+    //     type: DataTypes.INTEGER, 
     //     allowNull: false
     //   },
     authorId: {

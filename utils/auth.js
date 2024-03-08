@@ -8,6 +8,7 @@ app.use(session({
     saveUninitialized: true
 }));
 
+//not used in this project anymore
 const withAuth = (req, res, next) => {
     console.log('Checking authentication...');
     if (req.session && req.session.user) {

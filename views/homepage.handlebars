@@ -3,7 +3,7 @@
     <p>Sign in to make a blog post!</p>
     <nav>
         {{#if loggedIn}}
-            <form action="/signout" method="post">
+            <form action="/api/signout" method="post">
         <button type="submit">Sign Out</button>
         </form>
             <button><a href="/blogs/new">Create a New Blog Post</a></button>
@@ -18,13 +18,12 @@
     {{#each posts}}
         {{> blogpost}}
         {{> comment}}
-        <div class="vote-buttons">
-  <form action="/upvote/{{id}}?_method=PUT" method="POST">
-    <button type="submit">👍 {{upVotes}}</button> 
-  </form>
-  <form action="/downvote/{{id}}?_method=PUT" method="POST">
-    <button type="submit">👎 {{downVotes}}</button>
-  </form>
+    
+
+<div class="vote-buttons">
+  <button class="upvote-button" data-id="{{id}}">👍 <span class="upvote-count">{{upVotes}}</span></button>
+  <button class="downvote-button" data-id="{{id}}">👎 <span class="downvote-count">{{downVotes}}</span></button>
+</div>
   
 </div>
 {{> deletepost id=this.id}}

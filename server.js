@@ -10,6 +10,7 @@ const { seedDatabase } = require('./seeds/seed');
 const fs = require('fs');
 const methodOverride = require('method-override');
 
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -18,12 +19,6 @@ hbs.handlebars.registerPartial('blogpost', fs.readFileSync(__dirname + '/views/p
 hbs.handlebars.registerPartial('comment', fs.readFileSync(__dirname + '/views/partials/comment.handlebars', 'utf8'));
 hbs.handlebars.registerPartial('editpost', fs.readFileSync(__dirname + '/views/partials/editpost.handlebars', 'utf8'));
 hbs.handlebars.registerPartial('deletepost', fs.readFileSync(__dirname + '/views/partials/deletepost.handlebars', 'utf8'));
-// // hbs.handlebars.registerPartial('editcomment', fs.readFileSync(__dirname + '/views/partials/editcomment.handlebars', 'utf8'));
-// hbs.handlebars.registerPartial('editpost', fs.readFileSync(__dirname + '/views/partials/editpost.handlebars', 'utf8'));
-// // hbs.handlebars.registerPartial('newpost', fs.readFileSync(__dirname + '/views/partials/newpost.handlebars', 'utf8'));
-// hbs.handlebars.registerPartial('vote-buttons', fs.readFileSync(__dirname + '/views/partials/vote-buttons.handlebars', 'utf8'));
-// hbs.handlebars.registerPartial('deletepost', fs.readFileSync(__dirname + '/views/partials/deletepost.handlebars', 'utf8'));
-// hbs.handlebars.registerPartial('createblogpost', fs.readFileSync(__dirname + '/views/partials/createblogpost.handlebars', 'utf8'));
 
 
 const sess = {
@@ -51,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use(session(sess));
+
 // for overriding post methods to use put and delete
 app.use(methodOverride('_method'));
 
