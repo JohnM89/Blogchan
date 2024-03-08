@@ -99,7 +99,7 @@ router.post('/comment', async (req, res) => {
   try {
     const newComment = await Comment.create({
       ...req.body,
-      authorId: req.params.id,
+      authorId: req.session.user_id,
     });
     console.log("New Comment Added:", newComment);
 
