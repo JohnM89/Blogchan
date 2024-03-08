@@ -4,6 +4,8 @@ const sequelize = require('../config/connection');
 
 const db = {};
 
+
+
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
