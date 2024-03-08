@@ -16,19 +16,24 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
-// Add your migration script here
-const queryInterface = sequelize.getQueryInterface();
-
-queryInterface.addConstraint('blogPost', {
-  fields: ['authorId'],
-  type: 'foreign key',
-  references: {
-    table: 'User',
-    field: 'id'
-  },
-  onUpdate: 'CASCADE',
-  onDelete: 'CASCADE',
-  name: 'authorId' // Replace with your desired custom name
+// Modify your migration script to run after the blogPost table is created
+sequelize.sync({ force: true }).then(() => {
+  console.log('Database synchronized');
+}).then(() => {
+  const queryInterface = sequelize.getQueryInterface();
+  queryInterface.addConstraint('blogPost', {
+    fields: ['authorId'],
+    type: 'foreign key',
+    references: {
+      table: 'User',
+      field: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+    name: 'authorId' // Replace with your desired custom name
+  });
+}).catch((error) => {
+  console.error('Error synchronizing database:', error);
 });
 
 module.exports = db;
