@@ -21,13 +21,16 @@ User.init(
             allowNull: false,
             unique: true,
         },
-        email: {
-            type: DataTypes.STRING, 
-            allowNull: false
-        },
+          email: {
+    type: DataTypes.STRING, 
+    allowNull: false
+  },
         password: {
             type: DataTypes.STRING,
             allowNull: false,
+            // validate: {
+            //     len: [8],
+            // },
         },
         date_joined: {
             type: DataTypes.DATE,
@@ -50,19 +53,21 @@ User.init(
         timestamps: false, 
         freezeTableName: true,
         underscored: true,
-        modelName: 'User', 
+        modelName: 'user', 
     }
 );
 
 User.associate = (models) => {
     User.hasMany(models.BlogPost, {
         foreignKey: 'authorId',
-         constraint: 'fk_author_id',
     });
     User.hasMany(models.Comment, {
         foreignKey: 'authorId',
-         constraint: 'fk_author_id',
     });
-};
 
-module.exports = User;
+    // User.hasMany(models.Comment, {
+    //     foreignKey: 'username',
+    // });
+
+};
+module.exports =  User;

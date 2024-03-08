@@ -74,7 +74,7 @@ Comment.associate = (models) => {
     });
     Comment.belongsTo(models.User, {
         foreignKey: 'authorId',
-         constraint: 'fk_author_id',
+        
     });
 
 
