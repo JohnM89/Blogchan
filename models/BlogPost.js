@@ -53,6 +53,7 @@ BlogPost.associate = (models) => {
     });
     BlogPost.belongsTo(models.User, {
         foreignKey: 'authorId',
+         constraint: 'fk_author_id',
     });
 };
 

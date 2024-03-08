@@ -57,9 +57,11 @@ User.init(
 User.associate = (models) => {
     User.hasMany(models.BlogPost, {
         foreignKey: 'authorId',
+         constraint: 'fk_author_id',
     });
     User.hasMany(models.Comment, {
         foreignKey: 'authorId',
+         constraint: 'fk_author_id',
     });
 };
 
