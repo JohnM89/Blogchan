@@ -1,4 +1,3 @@
-
 ## BlogChan 📝
 
 <img src="./public/assets/Screenshot_8-3-2024_3306_localhost.jpeg" alt="BlogChan Interface" width="900" height="650"/>
@@ -19,7 +18,7 @@ Your go-to blogging platform designed for ease of use and simplicity! 🌟
 ## Tech Stack 🛠️
 
 - **Node.js:** 🤖
-- **Express.js:**  🚀
+- **Express.js:** 🚀
 - **Sequelize + MySQL:** 📊
 - **Handlebars:** Semantic templates for your inner masochist. 📄
 
@@ -51,4 +50,3 @@ Your go-to blogging platform designed for ease of use and simplicity! 🌟
 BlogChan is open-sourced under the MIT License.
 
 ![Fun GIF](./public/assets/Giphy.webp)
-
