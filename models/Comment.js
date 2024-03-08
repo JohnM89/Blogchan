@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Comment extends Model { }
+class Comment extends Model {}
 
 Comment.init({
     id: {
@@ -24,48 +24,32 @@ Comment.init({
         allowNull: true,
         defaultValue: 0,
     },
-
     downVotes: {
         type: DataTypes.INTEGER,
         allowNull: true,
         defaultValue: 0,
     },
-    //       userId: {
-    //     type: DataTypes.INTEGER, 
-    //     allowNull: false
-    //   },
     authorId: {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
-            model: 'user',
+            model: 'User',
             key: 'id',
         },
-
-        // authorUsername: {
-        //     type: DataTypes.STRING,
-        //     allowNull: true,
-        //     references: {
-        //         model: 'user',
-        //         key: 'username',
-
-        //     },    
-
-        // },
-        blogPostId: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            references: {
-                model: 'blogPost',
-                key: 'id',
-            },
+    },
+    blogPostId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: 'BlogPost',
+            key: 'id',
         },
     },
 }, {
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: 'comment',
+    modelName: 'Comment',
 });
 
 Comment.associate = (models) => {
@@ -76,13 +60,6 @@ Comment.associate = (models) => {
         foreignKey: 'authorId',
     });
 
-
-
-
-    // Comment.belongsTo(models.User, {
-    //     foreignKey: 'authorUsername',
-
-    // });
 
 };
 
