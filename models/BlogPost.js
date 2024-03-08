@@ -40,7 +40,7 @@ BlogPost.init({
 authorId: {
     type: DataTypes.INTEGER,
     references: {
-        model: 'User', 
+        model: 'user', 
         key: 'id',
     },
 },
