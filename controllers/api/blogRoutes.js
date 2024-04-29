@@ -63,7 +63,7 @@ router.post('/signup', async (req, res) => {
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.loggedIn = true;
-      res.redirect('/');
+      res.redirect('/homepage');
     });
   } catch (err) {
     console.error('Signup Error:', err);
@@ -170,7 +170,7 @@ router.post('/signin', async (req, res) => {
       req.session.loggedIn = true;
       console.log("User Logged In:", req.session.user_id);
       res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-      res.redirect('/');
+      res.redirect('/homepage');
 
     });
   } catch (err) {

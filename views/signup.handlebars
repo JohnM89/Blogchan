@@ -1,3 +1,4 @@
+{{!-- 
 <form action="/api/signup" method="POST" class="signup-form">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required>
@@ -10,4 +11,34 @@
 
     <button type="submit">Sign Up</button>
     <a href="/signin">Already have an account? Sign In</a>
-</form>
+    
+</form> --}}
+<section class="position-relative py-4 py-xl-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2>Sign Up</h2>
+                {{!-- <p class="w-lg-50">Curae hendrerit donec commodo hendrerit egestas tempus, turpis facilisis nostra nunc. Vestibulum dui eget ultrices.</p> --}}
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-5">
+                    <div class="card-body d-flex flex-column align-items-center">
+                        <div class="bs-icon-xl bs-icon-circle bs-icon-primary bs-icon my-4"><svg class="bi bi-person" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"></path>
+                            </svg></div>
+                        <form action="/api/signup" method="POST" class="signup-form">
+                            <div class="mb-3"><label for="username">Username:</label><input class="form-control" type="text" id="username" name="username" required /></div>
+                            <div class="mb-3"><label for="email">Email:</label><input class="form-control" type="email" id="email" name="email" required /></div>
+                            <div class="mb-3"><label for="password">Password:</label><input class="form-control" type="password" id="password" name="password" required /></div>
+                            <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Sign Up</button></div>
+                        </form>
+                        <a href="/signin" class="text-muted">Already have an account? Sign In</a>
+                                                    <link rel="stylesheet" href="{{stylesheets}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

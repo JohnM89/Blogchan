@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
     const posts = blogPostData.map(post => post.get({ plain: true }));
     console.log("Mapped Posts for Rendering:", posts);
 
-    res.render('homepage', {
+    res.render('landingpage', {
       posts,
       loggedIn: req.session.loggedIn,
       pageTitle: 'Home - BlogChan',
@@ -35,6 +35,36 @@ router.get('/', async (req, res) => {
   }
 });
 
+//route to render the blog-home page
+router.get('/homepage', async (req, res) => {
+  try {
+    const blogPostData = await BlogPost.findAll({
+      include: [
+        {
+          model: Comment,
+          include: [{ model: User, attributes: ['username'] }]
+        },
+        {
+          model: User,
+          attributes: ['username']
+        },
+      ]
+    });
+
+    const posts = blogPostData.map(post => post.get({ plain: true }));
+
+    res.render('homepage', {
+      posts,
+      loggedIn: req.session.loggedIn,
+      pageTitle: 'Home - BlogChan',
+      stylesheets: '/css/style.css',
+      javascripts: '/js/script.js'
+    });
+  } catch (err) {
+    console.error('Error rendering home page:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 // route to render the page for creating a new blog post
 router.get('/blogs/new', (req, res) => {
   try {

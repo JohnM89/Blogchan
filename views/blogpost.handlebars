@@ -1,4 +1,4 @@
-{{#if loggedIn}}
+{{!-- {{#if loggedIn}}
     <h2>Create a New Blog Post</h2>
     <form action="/api/blogs" method="post">
         <label for="title">Title:</label>
@@ -12,4 +12,28 @@
         
         <button type="submit">Post</button>
     </form>
-{{/if}}
+{{/if}} --}}
+
+<section class="position-relative py-4 py-xl-5">
+    <div class="container position-relative">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+                <div class="card mb-5">
+                    <div class="card-body p-sm-5">
+{{#if loggedIn}}
+    <h2>Create a New Blog Post</h2>
+    <form action="/api/blogs" method="post">
+                            <div class="mb-3"><input id="title" class="form-control" type="text" name="title" placeholder="Title" required/></div>
+                            <input type="hidden" name="authorId" value="{{authorId}}">
+        <input type="hidden" name="blogPostId" value="{{blogPostId}}">
+        <label for="username" name="username" value="{{username}}" </label>
+                            <div class="mb-3"><textarea class="form-control" id="content" name="content" required rows="6" placeholder="Blog Here!"></textarea></div>
+                            <div><button class="btn btn-primary d-block w-100" type="submit">Send </button></div>
+                        </form>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -45,7 +45,25 @@ app.use(express.static(path.join(__dirname, 'views')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+// Use session middleware
 app.use(session(sess));
+
+// Middleware to check if the session is expired
+const checkSession = (req, res, next) => {
+    // If the session exists and is active, continue
+    if (req.session && req.session.user) {
+        return next();
+    } else {
+        // If the session does not exist or is expired, redirect to '/'
+        return res.redirect('/');
+    }
+};
+
+// Apply the checkSession middleware to routes where session authentication is required
+app.get('/protected-route', checkSession, (req, res) => {
+    // This route is protected, only accessible if the session is active
+    res.send('Welcome to the protected route!');
+});
 
 // for overriding post methods to use put and delete
 app.use(methodOverride('_method'));
