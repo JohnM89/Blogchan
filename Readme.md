@@ -1,6 +1,9 @@
 ## BlogChan 📝
 
-<img src="./public/assets/Screenshot_8-3-2024_3306_localhost.jpeg" alt="BlogChan Interface" width="900" height="650"/>
+
+<img src="./public/assets/newscreen.jpeg" alt="BlogChan Interface"/>
+
+<!-- <img src="./public/assets/Screenshot_8-3-2024_3306_localhost.jpeg" alt="BlogChan Interface" width="450" height="450"/> -->
 
 ## BlogChan 📝
 
