@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
       posts,
       loggedIn: req.session.loggedIn,
       pageTitle: 'Home - BlogChan',
-      stylesheets: '/css/style.css',
+      customCss: '/css/landingpage.css',
       javascripts: '/js/script.js'
     });
   } catch (err) {
@@ -68,9 +68,9 @@ router.get('/homepage', async (req, res) => {
 // route to render the page for creating a new blog post
 router.get('/blogs/new', (req, res) => {
   try {
-    console.log("Rendering New Post Page:", req.session.logged_in);
+    console.log("Rendering New Post Page:", req.session.loggedIn);
     res.render('blogpost', {
-      loggedIn: req.session.logged_in || true,
+      loggedIn: req.session.loggedIn || true,
       pageTitle: 'Create New Post - BlogChan',
       stylesheets: 'public/css/style.css',
       javascripts: '/js/script.js'
@@ -137,7 +137,7 @@ router.get('/blogs/edit/:id', async (req, res) => {
 
     res.render('editblogpost', { 
       post,
-      loggedIn: req.session.logged_in || true,
+      loggedIn: req.session.loggedIn || true,
       pageTitle: 'Edit Post - BlogChan',
       stylesheets: '/css/style.css',
       javascripts: '/js/script.js',

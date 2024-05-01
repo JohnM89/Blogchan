@@ -19,7 +19,8 @@ hbs.handlebars.registerPartial('blogpost', fs.readFileSync(__dirname + '/views/p
 hbs.handlebars.registerPartial('comment', fs.readFileSync(__dirname + '/views/partials/comment.handlebars', 'utf8'));
 hbs.handlebars.registerPartial('editpost', fs.readFileSync(__dirname + '/views/partials/editpost.handlebars', 'utf8'));
 hbs.handlebars.registerPartial('deletepost', fs.readFileSync(__dirname + '/views/partials/deletepost.handlebars', 'utf8'));
-
+hbs.handlebars.registerPartial('navbar', fs.readFileSync(__dirname + '/views/partials/navbar.handlebars', 'utf8'));
+hbs.handlebars.registerPartial('footer', fs.readFileSync(__dirname + '/views/partials/footer.handlebars', 'utf8'));
 
 const sess = {
     secret: 'Super secret secret',

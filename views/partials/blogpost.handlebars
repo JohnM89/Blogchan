@@ -1,8 +1,62 @@
-<article>
+{{!-- <article>
     <h2 data-blog-id="{{id}}">{{{get_emoji}}}{{title}}</h2>
 
     <p><span class="author-label">By:</span> <span class="author-name">{{user.username}}</span></p>
 <p><span class="date-label">Date:</span> <span class="date-value">{{{format_date date}}}</span></p>
 
     <p class="displayed-content">{{content}}</p>
-</article>
+</article> --}}
+<div class="f-card">
+  <div class="header">
+    <div class="options"><i class="fa fa-chevron-down"></i></div>
+    <img class="co-logo" src="http://placehold.it/40x40" />
+    <div class="co-name"><a href="#">{{user.username}}</a></div>
+    <div class="time"><a href="#">{{{format_date date}}}</a> · <i class="fa fa-globe"></i></div>
+  </div>
+  <div class="content">
+    <h2 data-blog-id="{{id}}">{{{get_emoji}}}{{title}}</h2>
+    {{!-- <p><span class="author-label">By:</span> <span class="author-name">{{user.username}}</span></p>
+    <p><span class="date-label">Date:</span> <span class="date-value">{{{format_date date}}}</span></p> --}}
+    {{!-- <p class="displayed-content">{{content}}</p> --}}
+  </div>
+  <link rel="stylesheet" href="{{stylesheets}}">
+
+  <div class="reference">
+    <img class="reference-thumb" src="http://placehold.it/476x249" />
+    <div class="reference-content">
+      <div class="reference-title">A quick and simple image placeholder service. | PLACEHOLDER.it</div>
+      <div class="reference-subtitle">{{content}}</div>
+      
+      <div class="reference-font">placeholder.it</div>
+    </div>
+  </div>
+<div class="social">
+    <div class="btn-group" role="group" aria-label="Post Actions">
+      <!-- Comment Button -->
+      <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#commentsCollapse{{id}}" aria-expanded="false" aria-controls="commentsCollapse{{id}}">
+        <i class="fa fa-comment"></i> Comment
+      </button>
+
+      <!-- Share Button -->
+      <button class="btn btn-link">
+        <i class="fa fa-share"></i> Share
+      </button>
+
+      <!-- Voting Buttons -->
+      <button class="btn btn-link upvote-button" data-id="{{id}}">👍 <span class="upvote-count">{{upVotes}}</span></button>
+      <button class="btn btn-link downvote-button" data-id="{{id}}">👎 <span class="downvote-count">{{downVotes}}</span></button>
+
+      <!-- Edit and Delete Buttons -->
+      {{> editpost id=this.id}}
+      {{> deletepost id=this.id}}
+    </div>
+
+    <!-- Collapsible Area for Comments -->
+    <div class="collapse" id="commentsCollapse{{id}}">
+      <div class="card card-body">
+        <!-- Placeholder for comment content or a partial template -->
+        {{> comment}}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,20 +1,15 @@
 body, html {
     font-family: Arial, sans-serif;
-    background-image: url('/assets/blog.jpg'); 
-    background-color: #f5f5f5; 
-   
-    background-size: fill; 
-    background-position: center center;
-    color: #333;
+    height: 100%; /* Ensure the HTML and body are full height */
     margin: 0;
     padding: 0;
-    height: 100%;
-        max-width: 1200px; 
-    margin: 0 auto; 
-    padding: 0 1.5rem; 
-    
+    background-image: url('/assets/blog.jpg'); /* Path to your image */
+    background-color: #f5f5f5;
+    background-size: cover; /* Cover ensures the image covers the viewport */
+    background-position: center center; /* Center the image */
+    background-attachment: fixed; /* Key for parallax effect */
+    overflow-x: hidden; /* Prevents horizontal scroll */
 }
-
 
 :root {
   --bs-breakpoint-xs: 0;

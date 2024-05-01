@@ -17,7 +17,7 @@ router.put('/blogs/:id', async (req, res) => {
 
     
     if (updateResult[0] > 0) {
-      res.redirect('/'); 
+      res.redirect('/homepage'); 
     } else {
       res.status(404).send('Post not found or not authorized to edit');
     }
@@ -50,7 +50,7 @@ router.delete('/blogs/delete/:id', async (req, res) => {
     }
   } catch (err) {
     console.error('Error deleting blog post:', err);
-    res.redirect('/'); 
+    res.redirect('/homepage'); 
   }
 });
 
@@ -82,7 +82,7 @@ router.post('/blogs', async (req, res) => {
     console.log("New Blog Post Added:", newBlogPost);
 
     // res.status(200).json(newBlogPost);
-    res.redirect('/');
+    res.redirect('/homepage');
   } catch (err) {
     console.error('Error adding new blog post:', err);
     res.status(400).json(err);
@@ -104,7 +104,7 @@ router.post('/comment', async (req, res) => {
     console.log("New Comment Added:", newComment);
 
     // res.status(200).json(newComment);
-    res.redirect('/');
+    res.redirect('/homepage');
   } catch (err) {
     console.error('Error adding new comment:', err);
     res.status(400).json(err);

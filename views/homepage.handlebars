@@ -20,25 +20,25 @@
         
     {{#each posts}}
     <div class="main">
-        {{> blogpost}}
+        {{> blogpost stylesheets="/css/blogpost.css"}}
 
-    <div class="vote-buttons">
+    {{!-- <div class="vote-buttons">
     <button class="upvote-button" data-id="{{id}}">👍 <span class="upvote-count">{{upVotes}}</span></button>
     <button class="downvote-button" data-id="{{id}}">👎 <span class="downvote-count">{{downVotes}}</span></button>
-    </div>
+    </div> --}}
     
-    <div class="comment-section">
+    {{!-- <div class="comment-section">
         {{> comment}}
-    </div>
+    </div> --}}
     </div>
     
     
   
 
-    <div class="edit-delete-buttons">
+    {{!-- <div class="edit-delete-buttons">
 {{> deletepost id=this.id}}
 {{> editpost id=this.id}}
-    </div>
+    </div> --}}
 </div>
         
     {{/each}}

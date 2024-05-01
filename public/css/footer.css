@@ -1,4 +1,4 @@
-.link-light:focus, .link-light:hover {
+/* .link-light:focus, .link-light:hover {
   color: RGBA(249,250,251,var(--bs-link-opacity,1))!important;
   -webkit-text-decoration-color: RGBA(249,250,251,var(--bs-link-underline-opacity,1))!important;
   text-decoration-color: RGBA(249,250,251,var(--bs-link-underline-opacity,1))!important;
@@ -60,4 +60,4 @@ a {
 .text-center {
   text-align: center!important;
 }
-
+ */
