@@ -7,18 +7,47 @@
 body {
   background-color:#e9ebee;
 }
-
+.posts-container {
+  display:grid;
+  flex-direction: 1fr;
+}
 .f-card {
   background-color:white;
 
   width:502px;
   border: 1px solid #d0d1d5;
   border-radius:3px;
-  margin: auto;
+  margin: 50px 0;
   margin-bottom:10px;
   padding: 12px; 
   
   box-shadow: 0 0 5px rgba(0, 0, 0, .30); 
+}
+
+.f-card.left {
+    /* text-align: left; */
+    margin-left: 25%;
+
+    justify-self: start;
+}
+
+.f-card.right {
+    /* text-align: right; */
+    margin-right: 25%;
+    justify-self: end;
+
+}
+
+@media (max-width: 600px) {
+  .posts-container  {
+    justify-content: center; /* Full width on small screens */
+  }
+}
+
+@media (min-width: 601px) {
+  .posts-container {
+    justify-content: center; /* Desired width on larger screens */
+  }
 }
 
 .header {

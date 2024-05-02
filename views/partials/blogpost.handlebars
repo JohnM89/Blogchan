@@ -6,7 +6,8 @@
 
     <p class="displayed-content">{{content}}</p>
 </article> --}}
-<div class="f-card">
+<div class="posts-container">
+<div class="f-card {{#if (isEven @index)}}right{{else}}left{{/if}}">
   <div class="header">
     <div class="options"><i class="fa fa-chevron-down"></i></div>
     <img class="co-logo" src="http://placehold.it/40x40" />
@@ -59,4 +60,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>

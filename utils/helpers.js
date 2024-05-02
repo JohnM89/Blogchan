@@ -37,10 +37,10 @@ const helpers = {
         }
         return str;
     },
+
+
+isEven: function(index) {
+    return (index % 2) === 0;
+}
 };
-
-
-
-
-
 module.exports = helpers;
