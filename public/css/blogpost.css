@@ -17,7 +17,7 @@ body {
   width:502px;
   border: 1px solid #d0d1d5;
   border-radius:3px;
-  margin: 50px 0;
+  margin: 150px 0;
   margin-bottom:10px;
   padding: 12px; 
   
@@ -26,15 +26,15 @@ body {
 
 .f-card.left {
     /* text-align: left; */
-    margin-left: 25%;
+    /* margin-left: 25%; */
 
-    justify-self: start;
+    justify-self: center;
 }
 
 .f-card.right {
     /* text-align: right; */
-    margin-right: 25%;
-    justify-self: end;
+    /* margin-right: 25%; */
+    justify-self: center;
 
 }
 
