@@ -2,12 +2,16 @@
 //utility to get image URLs
 function getImageUrls() {
     return [
-        '/assets/alex-knight-2EJCSULRwC8-unsplash.jpg',
-        '/assets/alex-knight-2EJCSULRwC8-unsplash.jpg',
-        '/assets/alex-knight-2EJCSULRwC8-unsplash.jpg',
-        './assets/alex-knight-2EJCSULRwC8-unsplash.jpg',
-        '/assets/alex-knight-2EJCSULRwC8-unsplash.jpg',
-        '/assets/alex-knight-2EJCSULRwC8-unsplash.jpg'
+        '/assets/alex.jpg',
+        '/assets/alexa.jpg',
+        '/assets/ben.jpg',
+        '/assets/flag.jpg',
+        '/assets/just.jpg',
+        '/assets/mike.jpg',
+        '/assets/news.jpg',
+        '/assets/olivo.jpg',
+        '/assets/pat.jpg',
+        '/assets/roman.jpg',
     ];
 }
 
@@ -60,8 +64,13 @@ isEven: function(index) {
 // append images to an array to apply them in the DOM
 appendImages: function() {
     const imageUrls = getImageUrls();
-    const randomIndex = Math.floor(Math.random() * imageUrls.length);
-    return { src: imageUrls[randomIndex] };
+    let result = [];
+    // for loop to add images to the array
+    for (let i = 0; i < 1; i++) {
+        const randomIndex = Math.floor(Math.random() * imageUrls.length);
+        result.push({ src: imageUrls[randomIndex] });
+    }
+    return result;
 }
     
     };
