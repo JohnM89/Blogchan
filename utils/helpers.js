@@ -75,7 +75,7 @@ appendImages: function() {
     }
     return result;
     }
-    //need to find a way to ensure images are only selected once, splice is not workign as intended
+    //need to find a way to ensure images are only selected once, splice is not working as intended
     
     };
 module.exports = helpers;
