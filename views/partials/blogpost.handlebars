@@ -23,7 +23,9 @@
   <link rel="stylesheet" href="{{stylesheets}}">
 
   <div class="reference">
-    <img class="reference-thumb" src="http://placehold.it/476x249" />
+{{#each (appendImages images)}}
+    <img class="reference-thumb" src="{{this.src}}" alt="Image Description" />
+{{/each}}
     <div class="reference-content">
       <div class="reference-title">A quick and simple image placeholder service. | PLACEHOLDER.it</div>
       <div class="reference-subtitle">{{content}}</div>

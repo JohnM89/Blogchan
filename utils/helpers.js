@@ -1,3 +1,17 @@
+
+//utility to get image URLs
+function getImageUrls() {
+    return [
+        '/assets/alex-knight-2EJCSULRwC8-unsplash.jpg',
+        '/assets/alex-knight-2EJCSULRwC8-unsplash.jpg',
+        '/assets/alex-knight-2EJCSULRwC8-unsplash.jpg',
+        './assets/alex-knight-2EJCSULRwC8-unsplash.jpg',
+        '/assets/alex-knight-2EJCSULRwC8-unsplash.jpg',
+        '/assets/alex-knight-2EJCSULRwC8-unsplash.jpg'
+    ];
+}
+
+
 const helpers = {
     format_date: (date) => {
     if (!date) return '';
@@ -41,6 +55,14 @@ const helpers = {
 
 isEven: function(index) {
     return (index % 2) === 0;
+},
+
+// append images to an array to apply them in the DOM
+appendImages: function() {
+    const imageUrls = getImageUrls();
+    const randomIndex = Math.floor(Math.random() * imageUrls.length);
+    return { src: imageUrls[randomIndex] };
 }
-};
+    
+    };
 module.exports = helpers;
