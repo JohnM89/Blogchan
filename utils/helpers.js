@@ -65,13 +65,17 @@ isEven: function(index) {
 appendImages: function() {
     const imageUrls = getImageUrls();
     let result = [];
+    const numberOfImages = 1;
     // for loop to add images to the array
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < numberOfImages; i++) {
+        if (imageUrls.length === 0) { break; }
         const randomIndex = Math.floor(Math.random() * imageUrls.length);
         result.push({ src: imageUrls[randomIndex] });
+        imageUrls.splice(randomIndex, 1);
     }
     return result;
-}
+    }
+    //need to find a way to ensure images are only selected once, splice is not workign as intended
     
     };
 module.exports = helpers;
