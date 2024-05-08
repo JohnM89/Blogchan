@@ -36,5 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+
+
 // want to add a delete button async function to delete a post eventually
 // same for submitting a comment
