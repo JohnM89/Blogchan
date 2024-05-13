@@ -2,9 +2,10 @@
   color: RGBA(249,250,251,var(--bs-link-opacity,1))!important;
   -webkit-text-decoration-color: RGBA(249,250,251,var(--bs-link-underline-opacity,1))!important;
   text-decoration-color: RGBA(249,250,251,var(--bs-link-underline-opacity,1))!important;
-}
+} */
 
-a:hover {
+
+/* a:hover {
   --bs-link-color-rgb: var(--bs-link-hover-color-rgb);
 }
 

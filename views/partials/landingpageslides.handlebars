@@ -1,18 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>{{pageTitle}}</title>
-    <link rel="stylesheet" href="{{customCss}}">
-    {{!-- Other stylesheets can be added here --}}
-</head>
-<body>
-    <header>
-        {{> navbar stylesheets="/css/navbar.css"}}
-    </header>
-
     <section>
-        {{!-- <div style="height: 600px;background-image: url('/assets/akira-HeLGgUTzIhM-unsplash.jpg');background-position: center;background-size: cover;">
+        <div style="height: 600px;background-image: url('/assets/akira-HeLGgUTzIhM-unsplash.jpg');background-position: center;background-size: cover;">
             <div class="container h-100">
                 <div class="row h-100">
                     <div class="col-md-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
@@ -25,13 +12,7 @@
                     </div>
                 </div>
             </div>
-        </div> --}}
-        {{> landingpageslides}}
+        </div>
+        <link rel="stylesheet" href="{{stylesheets}}">
     </section>
-
-    {{!-- Include scripts at the bottom of the body for better loading performance --}}
-    <script src="{{javascripts}}"></script>
-    <script src="/js/script.js"></script>
-    {{!-- Bootstrap and other scripts can be included here --}}
-</body>
-</html>
+    
