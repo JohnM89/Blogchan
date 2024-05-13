@@ -1,18 +1,61 @@
-    <section>
-        <div style="height: 600px;background-image: url('/assets/akira-HeLGgUTzIhM-unsplash.jpg');background-position: center;background-size: cover;">
-            <div class="container h-100">
-                <div class="row h-100">
-                    <div class="col-md-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
-                        <div style="max-width: 350px;">
-                            <h1 class="text-uppercase fw-bold">Welcome<br />To The Daily Dev</h1>
-                            <p class="my-3">A fun little development blog to journal my foray into tech.</p>
-                            <a class="btn btn-primary btn-lg me-2" role="button" href="#">Back</a>
-                            <a class="btn btn-outline-primary btn-lg" role="button" href="#">Next</a>
+<section>
+    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div style="height: 700px; background-image: url('/assets/akira-HeLGgUTzIhM-unsplash.jpg'); background-position: center; background-size: cover;">
+                    <div class="container h-100">
+                        <div class="row h-100">
+                            <div class="col-md-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
+                                <div>
+                                    <h1 class="text-uppercase fw-bold">Welcome<br />To The Daily Dev</h1>
+                                    <p class="my-3">A fun little development blog to journal my foray into tech.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="carousel-item">
+                <div style="height: 700px; background-image: url('/assets/array.jpg'); background-position: center; background-size: cover;">
+                    <div class="container h-100">
+                        <div class="row h-100">
+                            <div class="col-md-6">
+                                PLACEHOLDER
+                            </div>
+                            <div class="col-md-6">
+                               PLACEHOLDER
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        <div class="carousel-item">
+                <div style="height: 700px; background-image: url('/assets/road.jpg'); background-position: center; background-size: cover;">
+                    <div class="container h-100">
+                        <div class="row h-100">
+                            <div class="col-md-6">
+                                PLACEHOLDER
+                            </div>
+                            <div class="col-md-6">
+                                PLACEHOLDER
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <link rel="stylesheet" href="{{stylesheets}}">
-    </section>
-    
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <link rel="stylesheet" href="{{stylesheets}}">
+</section>

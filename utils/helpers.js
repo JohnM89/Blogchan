@@ -1,19 +1,23 @@
 
 //utility to get image URLs
+
+
 function getImageUrls() {
     return [
         '/assets/alex.jpg',
         '/assets/alexa.jpg',
-        '/assets/ben.jpg',
+        '/assets/Giphy.webp',
         '/assets/flag.jpg',
         '/assets/just.jpg',
         '/assets/mike.jpg',
         '/assets/news.jpg',
         '/assets/olivo.jpg',
-        '/assets/pat.jpg',
+        // '/assets/pat.jpg',
         '/assets/roman.jpg',
     ];
 }
+
+
 
 
 const helpers = {
@@ -76,6 +80,7 @@ appendImages: function() {
     return result;
     }
     //need to find a way to ensure images are only selected once, splice is not working as intended
+    
     
     };
 module.exports = helpers;
