@@ -22,6 +22,7 @@ hbs.handlebars.registerPartial('deletepost', fs.readFileSync(__dirname + '/views
 hbs.handlebars.registerPartial('navbar', fs.readFileSync(__dirname + '/views/partials/navbar.handlebars', 'utf8'));
 hbs.handlebars.registerPartial('footer', fs.readFileSync(__dirname + '/views/partials/footer.handlebars', 'utf8'));
 hbs.handlebars.registerPartial('landingpageslides', fs.readFileSync(__dirname + '/views/partials/landingpageslides.handlebars', 'utf8'));
+hbs.handlebars.registerPartial('technologyposts', fs.readFileSync(__dirname + '/views/partials/technologyposts.handlebars', 'utf8'));
 
 const sess = {
     secret: 'Super secret secret',
