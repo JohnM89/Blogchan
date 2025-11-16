@@ -5,12 +5,25 @@
  *
  * This script automatically converts markdown files from notes/drafts/
  * into BlogChan blog posts and moves them to notes/published/
+ *
+ * SECURITY: Uses 'marked' for markdown parsing and 'isomorphic-dompurify'
+ * for HTML sanitization to prevent XSS attacks.
  */
 
 const fs = require('fs');
 const path = require('path');
+const { marked } = require('marked');
+const createDOMPurify = require('isomorphic-dompurify');
 const { BlogPost, User } = require('../models');
 const sequelize = require('../config/connection');
+
+// Configure marked for security
+marked.setOptions({
+  headerIds: false,
+  mangle: false,
+  breaks: true,
+  gfm: true, // GitHub Flavored Markdown
+});
 
 // Simple frontmatter parser
 function parseFrontmatter(content) {
@@ -34,64 +47,36 @@ function parseFrontmatter(content) {
   return { metadata, content: markdownContent.trim() };
 }
 
-// Simple markdown to HTML converter (basic support)
+/**
+ * Safely convert markdown to HTML with XSS protection
+ * Uses marked for parsing and DOMPurify for sanitization
+ */
 function markdownToHtml(markdown) {
-  let html = markdown;
+  // First, convert markdown to HTML
+  const rawHtml = marked.parse(markdown);
 
-  // Headers (must come before other replacements)
-  html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
-  html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
-  html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
-
-  // Code blocks
-  html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (match, lang, code) => {
-    return `<pre><code class="language-${lang || 'plaintext'}">${escapeHtml(code.trim())}</code></pre>`;
+  // Then sanitize the HTML to prevent XSS attacks
+  const cleanHtml = createDOMPurify.sanitize(rawHtml, {
+    ALLOWED_TAGS: [
+      'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+      'p', 'br', 'hr',
+      'strong', 'em', 'b', 'i', 'u', 'strike', 'del',
+      'code', 'pre',
+      'ul', 'ol', 'li',
+      'a', 'img',
+      'blockquote',
+      'table', 'thead', 'tbody', 'tr', 'th', 'td'
+    ],
+    ALLOWED_ATTR: [
+      'href', 'title', 'alt', 'src',
+      'class', // For code highlighting
+    ],
+    ALLOWED_URI_REGEXP: /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
+    ALLOW_DATA_ATTR: false,
+    ALLOW_UNKNOWN_PROTOCOLS: false,
   });
 
-  // Inline code
-  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
-
-  // Bold and italic
-  html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
-  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-
-  // Links
-  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
-
-  // Images
-  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" />');
-
-  // Lists
-  html = html.replace(/^\* (.+)$/gim, '<li>$1</li>');
-  html = html.replace(/^- (.+)$/gim, '<li>$1</li>');
-  html = html.replace(/^\d+\. (.+)$/gim, '<li>$1</li>');
-
-  // Wrap consecutive <li> in <ul>
-  html = html.replace(/(<li>.*<\/li>\n?)+/gs, match => {
-    return `<ul>\n${match}</ul>\n`;
-  });
-
-  // Paragraphs (wrap non-tag lines)
-  html = html.split('\n\n').map(para => {
-    para = para.trim();
-    if (!para) return '';
-    if (para.startsWith('<')) return para;
-    return `<p>${para}</p>`;
-  }).join('\n');
-
-  return html;
-}
-
-function escapeHtml(text) {
-  const map = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#039;'
-  };
-  return text.replace(/[&<>"']/g, m => map[m]);
+  return cleanHtml;
 }
 
 async function publishNote(filePath, userId) {

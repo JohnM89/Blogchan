@@ -170,13 +170,17 @@ tags: Optional - Comma-separated tags
 
 ### Supported Markdown Features
 
-- **Headers**: `# H1`, `## H2`, `### H3`
+- **Headers**: `# H1`, `## H2`, `### H3`, etc.
 - **Emphasis**: `*italic*`, `**bold**`, `***bold italic***`
 - **Lists**: Bulleted (`-` or `*`) and numbered (`1.`)
-- **Links**: `[text](url)`
+- **Links**: `[text](url)` (http/https only)
 - **Images**: `![alt](url)`
-- **Code**: `` `inline` `` and ` ```language ` code blocks
+- **Code**: `` `inline` `` and ` ```language ` code blocks with syntax highlighting
+- **Tables**: GitHub Flavored Markdown tables
+- **Blockquotes**: `> quoted text`
 - **Paragraphs**: Separated by blank lines
+
+> **Security**: Markdown is parsed with `marked` and sanitized with `DOMPurify` to prevent XSS attacks. Dangerous HTML, JavaScript, and protocols (like `javascript:`) are automatically stripped.
 
 ### Manual Publishing
 
