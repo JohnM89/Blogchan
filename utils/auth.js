@@ -1,22 +1,9 @@
-const express = require('express');
-const session = require('express-session');
-
-const app = express();
-
-app.use(session({
-    secret: 'your-secret-key',
-    saveUninitialized: true
-}));
-
-//not used in this project anymore
+// Middleware to check if user is authenticated
 const withAuth = (req, res, next) => {
-    console.log('Checking authentication...');
-    if (req.session && req.session.user) {
-        console.log('User is authenticated.');
-        next(); 
+    if (req.session && req.session.loggedIn) {
+        next();
     } else {
-        console.log('User is not authenticated. Redirecting to login page...');
-        res.redirect('/signin'); 
+        res.redirect('/signin');
     }
 };
 

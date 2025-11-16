@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { BlogPost, Comment, User } = require('../../models/index.js');
+const withAuth = require('../../utils/auth');
 
 
-router.put('/blogs/:id', async (req, res) => {
+router.put('/blogs/:id', withAuth, async (req, res) => {
   try {
     const { title, content } = req.body; 
 
@@ -27,7 +28,7 @@ router.put('/blogs/:id', async (req, res) => {
   }
 });
 
-router.delete('/blogs/delete/:id', async (req, res) => {
+router.delete('/blogs/delete/:id', withAuth, async (req, res) => {
   try {
     
     const deleted = await BlogPost.destroy({
@@ -72,7 +73,7 @@ router.post('/signup', async (req, res) => {
 });
 
 // route to handle blog post form submission
-router.post('/blogs', async (req, res) => {
+router.post('/blogs', withAuth, async (req, res) => {
   try {
     const newBlogPost = await BlogPost.create({
       ...req.body,
@@ -90,12 +91,7 @@ router.post('/blogs', async (req, res) => {
 });
 
 // route to handle comment form submission
-router.post('/comment', async (req, res) => {
-
-  if (!req.session.loggedIn) {
-    console.log("User not logged in");
-    return res.status(401).send('You need to be logged in to comment');
-  }
+router.post('/comment', withAuth, async (req, res) => {
   try {
     const newComment = await Comment.create({
       ...req.body,

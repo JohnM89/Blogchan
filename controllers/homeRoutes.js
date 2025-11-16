@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { BlogPost, Comment, User } = require('../models/index.js');
+const withAuth = require('../utils/auth');
 
 // route to render the home page
 router.get('/', async (req, res) => {
@@ -57,7 +58,6 @@ router.get('/homepage', async (req, res) => {
       posts,
       loggedIn: req.session.loggedIn,
       pageTitle: 'Home - BlogChan',
-      stylesheets: '/css/style.css',
       javascripts: '/js/script.js'
     });
   } catch (err) {
@@ -66,13 +66,12 @@ router.get('/homepage', async (req, res) => {
   }
 });
 // route to render the page for creating a new blog post
-router.get('/blogs/new', (req, res) => {
+router.get('/blogs/new', withAuth, (req, res) => {
   try {
     console.log("Rendering New Post Page:", req.session.loggedIn);
     res.render('blogpost', {
-      loggedIn: req.session.loggedIn || true,
+      loggedIn: req.session.loggedIn,
       pageTitle: 'Create New Post - BlogChan',
-      stylesheets: 'public/css/style.css',
       javascripts: '/js/script.js'
     });
   } catch (err) {
@@ -105,11 +104,10 @@ router.get('/blogs', async (req, res) => {
     const posts = blogPostData.map(post => post.get({ plain: true }));
 
     
-    res.render('blogs', { 
+    res.render('blogs', {
       posts,
-      loggedIn: req.session.loggedIn, 
+      loggedIn: req.session.loggedIn,
       pageTitle: 'All Blog Posts - BlogChan',
-      stylesheets: '/css/style.css',
       javascripts: '/js/script.js'
     });
   } catch (err) {
@@ -118,33 +116,31 @@ router.get('/blogs', async (req, res) => {
   }
 });
 
-router.get('/blogs/edit/:id', async (req, res) => {
+router.get('/blogs/edit/:id', withAuth, async (req, res) => {
   try {
     const postData = await BlogPost.findByPk(req.params.id, {
       include: [{ model: User, attributes: ['username'] }],
     });
 
     if (!postData) {
-      return res.status(404).send('Post not found');
+      return res.status(404).json({ message: 'Post not found' });
     }
 
     if (postData.authorId !== req.session.user_id) {
-      return res.status(403).send('Not authorized to edit this post please log in');
+      return res.status(403).json({ message: 'Not authorized to edit this post' });
     }
 
-    
     const post = postData.get({ plain: true });
 
-    res.render('editblogpost', { 
+    res.render('editblogpost', {
       post,
-      loggedIn: req.session.loggedIn || true,
+      loggedIn: req.session.loggedIn,
       pageTitle: 'Edit Post - BlogChan',
-      stylesheets: '/css/style.css',
       javascripts: '/js/script.js',
     });
   } catch (err) {
     console.error('Error fetching blog post for edit:', err);
-    res.status(500).send('Server err0r');
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
@@ -165,7 +161,7 @@ router.get('/blogs/:id', async (req, res) => {
 
     if (!blogPostData) {
       console.log("No Blog Post Found:", req.params.id);
-      return res.status(404).json({ message: 'Post no found!' });
+      return res.status(404).json({ message: 'Post not found' });
     }
 
     
@@ -194,8 +190,7 @@ router.get('/signup', (req, res) => {
   console.log("Rendering Signup Page");
   res.render('signup', {
     pageTitle: 'Sign Up - BlogChan',
-    stylesheet: './css/style.css',
-    javascript: '/js/script.js'
+    javascripts: '/js/script.js'
   });
 });
 
@@ -210,7 +205,6 @@ router.get('/signin', (req, res) => {
   console.log("Rendering Signin Page");
   res.render('signin', {
     pageTitle: 'Sign In - BlogChan',
-    stylesheets: '/css/style.css',
     javascripts: '/js/script.js'
   });
 });

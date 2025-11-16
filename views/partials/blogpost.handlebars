@@ -1,11 +1,3 @@
-{{!-- <article>
-    <h2 data-blog-id="{{id}}">{{{get_emoji}}}{{title}}</h2>
-
-    <p><span class="author-label">By:</span> <span class="author-name">{{user.username}}</span></p>
-<p><span class="date-label">Date:</span> <span class="date-value">{{{format_date date}}}</span></p>
-
-    <p class="displayed-content">{{content}}</p>
-</article> --}}
 <div class="posts-container">
 <div class="f-card {{#if (isEven @index)}}right{{else}}left{{/if}}">
   <div class="header">
@@ -15,11 +7,7 @@
     <div class="time"><a href="#">{{{format_date date}}}</a> · <i class="fa fa-globe"></i></div>
   </div>
   <div class="content">
-    {{!-- {{{get_emoji}}} --}}
     <h2 data-blog-id="{{id}}">{{title}}</h2>
-    {{!-- <p><span class="author-label">By:</span> <span class="author-name">{{user.username}}</span></p>
-    <p><span class="date-label">Date:</span> <span class="date-value">{{{format_date date}}}</span></p> --}}
-    {{!-- <p class="displayed-content">{{content}}</p> --}}
   </div>
   <link rel="stylesheet" href="{{stylesheets}}">
 
