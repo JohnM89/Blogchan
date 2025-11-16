@@ -25,11 +25,11 @@ hbs.handlebars.registerPartial('landingpageslides', fs.readFileSync(__dirname + 
 hbs.handlebars.registerPartial('technologyposts', fs.readFileSync(__dirname + '/views/partials/technologyposts.handlebars', 'utf8'));
 
 const sess = {
-    secret: 'Super secret secret',
+    secret: process.env.SESSION_SECRET || 'Super secret secret',
     cookie: {
-        maxAge: 300000,
+        maxAge: 24 * 60 * 60 * 1000, // 24 hours
         httpOnly: true,
-        secure: false,
+        secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
     },
     resave: false,
@@ -44,33 +44,10 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(express.static(path.join(__dirname, 'views')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use(express.static('public'));
 
-
-// Use session middleware
 app.use(session(sess));
-
-// Middleware to check if the session is expired
-const checkSession = (req, res, next) => {
-    // If the session exists and is active, continue
-    if (req.session && req.session.user) {
-        return next();
-    } else {
-        // If the session does not exist or is expired, redirect to '/'
-        return res.redirect('/');
-    }
-};
-
-// Apply the checkSession middleware to routes where session authentication is required
-app.get('/protected-route', checkSession, (req, res) => {
-    // This route is protected, only accessible if the session is active
-    res.send('Welcome to the protected route!');
-});
-
-// for overriding post methods to use put and delete
 app.use(methodOverride('_method'));
 
 

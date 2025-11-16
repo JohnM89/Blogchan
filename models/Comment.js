@@ -30,10 +30,6 @@ Comment.init({
         allowNull: true,
         defaultValue: 0,
     },
-    //       userId: {
-    //     type: DataTypes.INTEGER, 
-    //     allowNull: false
-    //   },
     authorId: {
         type: DataTypes.INTEGER,
         allowNull: true,
@@ -41,24 +37,13 @@ Comment.init({
             model: 'user',
             key: 'id',
         },
-
-        // authorUsername: {
-        //     type: DataTypes.STRING,
-        //     allowNull: true,
-        //     references: {
-        //         model: 'user',
-        //         key: 'username',
-
-        //     },    
-
-        // },
-        blogPostId: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            references: {
-                model: 'blogPost',
-                key: 'id',
-            },
+    },
+    blogPostId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: 'blogPost',
+            key: 'id',
         },
     },
 }, {
@@ -74,17 +59,7 @@ Comment.associate = (models) => {
     });
     Comment.belongsTo(models.User, {
         foreignKey: 'authorId',
-        
     });
-
-
-
-
-    // Comment.belongsTo(models.User, {
-    //     foreignKey: 'authorUsername',
-
-    // });
-
 };
 
 module.exports = Comment;

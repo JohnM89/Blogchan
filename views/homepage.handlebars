@@ -1,54 +1,27 @@
 <header>
-    {{> navbar stylesheets="/css/navbar.css"}}
+    {{> navbar}}
 </header>
+
 <section class="py-4 py-xl-5">
     <div class="container h-100">
         <div class="row h-100">
             <div class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
                 <div>
-                    <h2 class="text-uppercase fw-bold mb-3">Blog<br />You've arrived at the landing page</h2>
-                    <p class="mb-4">This is the space to comment, post and vote on what you like what you don't or whatever you feel like.</p>
-                    {{!-- <button class="btn btn-primary fs-5 me-2 py-2 px-4" type="button">Button</button>
-                    <button class="btn btn-outline-primary fs-5 py-2 px-4" type="button">Button</button> --}}
+                    <h2 class="text-uppercase fw-bold mb-3">BlogChan<br />Welcome to the Community</h2>
+                    <p class="mb-4">This is the space to comment, post and vote on what you like, what you don't, or whatever you feel like.</p>
                 </div>
+            </div>
         </div>
-        {{> sidebar stylesheets="/css/sidebar.css"}}
     </div>
-
 </section>
 
-<section >
+<section>
     <div>
-        
-    {{#each posts}}
-    <div class="main">
-        {{> blogpost stylesheets="/css/blogpost.css"}}
-        {{> technologyposts stylesheets="/css/blogpost.css"}}
-
-    {{!-- <div class="vote-buttons">
-    <button class="upvote-button" data-id="{{id}}">👍 <span class="upvote-count">{{upVotes}}</span></button>
-    <button class="downvote-button" data-id="{{id}}">👎 <span class="downvote-count">{{downVotes}}</span></button>
-    </div> --}}
-    
-    {{!-- <div class="comment-section">
-        {{> comment}}
-    </div> --}}
-    
+        {{#each posts}}
+        <div class="main">
+            {{> blogpost}}
+            {{> technologyposts}}
+        </div>
+        {{/each}}
     </div>
-    
-    
-    
-  
-
-    {{!-- <div class="edit-delete-buttons">
-{{> deletepost id=this.id}}
-{{> editpost id=this.id}}
-    </div> --}}
-</div>
-        
-    {{/each}}
-       
 </section>
-{{!-- {{> sidebar stylesheets="/css/sidebar.css"}} --}}
-{{!-- <footer>
-    <p>&copy; 2024 BlogChan</p> --}}
