@@ -1,0 +1,103 @@
+name: Publish Markdown Notes
+
+on:
+  # Run daily at midnight UTC
+  schedule:
+    - cron: '0 0 * * *'
+
+  # Allow manual trigger
+  workflow_dispatch:
+
+  # Run when markdown files are pushed to notes/drafts/
+  push:
+    paths:
+      - 'notes/drafts/*.md'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all history for proper git operations
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup MySQL
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          mysql version: '8.0'
+          mysql database: ${{ secrets.DB_NAME || 'blogchan_db' }}
+          mysql user: ${{ secrets.DB_USER || 'root' }}
+          mysql password: ${{ secrets.DB_PASSWORD || 'password' }}
+
+      - name: Wait for MySQL
+        run: |
+          until mysql -h 127.0.0.1 -u${{ secrets.DB_USER || 'root' }} -p${{ secrets.DB_PASSWORD || 'password' }} -e "SELECT 1"; do
+            echo "Waiting for MySQL..."
+            sleep 2
+          done
+
+      - name: Create database schema
+        run: mysql -h 127.0.0.1 -u${{ secrets.DB_USER || 'root' }} -p${{ secrets.DB_PASSWORD || 'password' }} ${{ secrets.DB_NAME || 'blogchan_db' }} < db/schema.sql
+
+      - name: Seed database (if needed)
+        env:
+          DB_NAME: ${{ secrets.DB_NAME || 'blogchan_db' }}
+          DB_USER: ${{ secrets.DB_USER || 'root' }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD || 'password' }}
+          DB_HOST: 127.0.0.1
+          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+          SEED_DB: 'true'
+        run: node -e "require('./seeds/seed').seedDatabase().then(() => console.log('Seeded!'))"
+
+      - name: Check for notes to publish
+        id: check_notes
+        run: |
+          count=$(find notes/drafts -name "*.md" ! -name "example.md" | wc -l)
+          echo "count=$count" >> $GITHUB_OUTPUT
+          echo "Found $count note(s) to publish"
+
+      - name: Publish markdown notes
+        if: steps.check_notes.outputs.count > 0
+        env:
+          DB_NAME: ${{ secrets.DB_NAME || 'blogchan_db' }}
+          DB_USER: ${{ secrets.DB_USER || 'root' }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD || 'password' }}
+          DB_HOST: 127.0.0.1
+          BLOG_AUTHOR_USERNAME: ${{ secrets.BLOG_AUTHOR_USERNAME }}
+        run: npm run publish-notes
+
+      - name: Commit published notes
+        if: steps.check_notes.outputs.count > 0
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add notes/
+          git commit -m "📝 Auto-publish markdown notes [skip ci]" || echo "No changes to commit"
+
+      - name: Push changes
+        if: steps.check_notes.outputs.count > 0
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+
+      - name: Summary
+        if: steps.check_notes.outputs.count > 0
+        run: |
+          echo "✅ Published ${{ steps.check_notes.outputs.count }} note(s) successfully!"
+          echo "📁 Files moved from notes/drafts/ to notes/published/"
+
+      - name: No notes found
+        if: steps.check_notes.outputs.count == 0
+        run: echo "📭 No new notes to publish. Add .md files to notes/drafts/ directory."

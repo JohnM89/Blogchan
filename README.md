@@ -10,6 +10,7 @@ A full-stack blogging platform with user authentication, post creation, commenti
 - 👍 **Voting System**: Upvote and downvote posts and comments
 - 📱 **Responsive Design**: Mobile-friendly interface with Bootstrap 5
 - 🎨 **Modern UI**: Clean, sleek interface inspired by social media platforms
+- 🤖 **Automated Publishing**: Daily automated conversion of markdown notes to blog posts via GitHub Actions
 
 ## Tech Stack
 
@@ -109,10 +110,162 @@ npm start
 
 The application will be available at `http://localhost:3001`
 
+## 📝 Markdown Notes to Blog Posts
+
+BlogChan includes an automated pipeline that converts your markdown notes into published blog posts. Perfect for maintaining a daily blog from your note-taking workflow!
+
+### How It Works
+
+1. **Write** markdown files in `notes/drafts/`
+2. **Commit** and push to GitHub
+3. **Automated** GitHub Actions workflow runs daily (midnight UTC)
+4. **Published** posts appear on your blog automatically
+5. **Moved** processed files go to `notes/published/`
+
+### Quick Start
+
+1. **Create a markdown note** in `notes/drafts/`:
+
+```markdown
+---
+title: My First Automated Post
+author: Your Name
+tags: automation, blogging, markdown
+---
+
+# My First Automated Post
+
+This is my content written in markdown!
+
+## Benefits
+
+- Write in your favorite editor
+- Version control with Git
+- Automatic publishing
+```
+
+2. **Commit and push**:
+```bash
+git add notes/drafts/my-note.md
+git commit -m "Add new blog post"
+git push
+```
+
+3. **Wait for automation** or run manually:
+```bash
+npm run publish-notes
+```
+
+### Markdown Frontmatter
+
+Add metadata to your posts using YAML frontmatter:
+
+```yaml
+---
+title: Required - Your post title
+author: Optional - Author name (defaults to BLOG_AUTHOR_USERNAME)
+tags: Optional - Comma-separated tags
+---
+```
+
+### Supported Markdown Features
+
+- **Headers**: `# H1`, `## H2`, `### H3`, etc.
+- **Emphasis**: `*italic*`, `**bold**`, `***bold italic***`
+- **Lists**: Bulleted (`-` or `*`) and numbered (`1.`)
+- **Links**: `[text](url)` (http/https only)
+- **Images**: `![alt](url)`
+- **Code**: `` `inline` `` and ` ```language ` code blocks with syntax highlighting
+- **Tables**: GitHub Flavored Markdown tables
+- **Blockquotes**: `> quoted text`
+- **Paragraphs**: Separated by blank lines
+
+> **Security**: Markdown is parsed with `marked` and sanitized with `DOMPurify` to prevent XSS attacks. Dangerous HTML, JavaScript, and protocols (like `javascript:`) are automatically stripped.
+
+### Manual Publishing
+
+Publish all drafts:
+```bash
+npm run publish-notes
+```
+
+Publish specific file:
+```bash
+node scripts/publish-notes.js notes/drafts/my-post.md
+```
+
+### Configuration
+
+Set the author username in `.env`:
+```env
+BLOG_AUTHOR_USERNAME=your-username
+```
+
+### Local Workflow (Recommended for Local Development)
+
+The simplest approach for local development:
+
+1. **Write** your markdown notes in `notes/drafts/`
+2. **Run** the publish script:
+   ```bash
+   npm run publish-notes
+   ```
+3. **View** your published posts at `http://localhost:3001`
+
+Your files are automatically moved from `drafts/` to `published/` after publishing.
+
+### GitHub Actions Setup (Optional - For Hosted Deployments)
+
+> **Note**: Requires a hosted database service (Railway, Render, PlanetScale, etc.)
+
+The workflow in `.github/workflows/publish-notes.yml` can run automated publishing if you deploy to a free hosting service:
+
+#### Free Hosting Options
+- **Railway** - Free tier with MySQL
+- **Render** - Free tier with PostgreSQL (requires minor DB adapter change)
+- **Fly.io** - Free tier with persistent storage
+- **PlanetScale** - Free MySQL database (serverless)
+
+#### Setup for Hosted Deployment
+Add these secrets to your GitHub repository (Settings → Secrets):
+
+- `DB_NAME` - Database name
+- `DB_USER` - Database user
+- `DB_PASSWORD` - Database password
+- `DB_HOST` - Database host
+- `SESSION_SECRET` - Session secret key
+- `BLOG_AUTHOR_USERNAME` - Author username for posts
+
+The workflow will then run:
+- **Daily** at midnight UTC
+- **On push** when `.md` files are added to `notes/drafts/`
+- **Manually** via GitHub Actions UI
+
+### Directory Structure
+
+```
+notes/
+├── drafts/          # Place new .md files here
+│   └── example.md   # Template file (won't be published)
+├── published/       # Auto-published files moved here
+└── README.md        # Documentation
+```
+
+### Tips
+
+- ✅ **DO**: Write in markdown, use frontmatter, version control your notes
+- ✅ **DO**: Test locally with `npm run publish-notes` before pushing
+- ✅ **DO**: Keep one post per file for easier management
+- ❌ **DON'T**: Edit files in `published/` (they're auto-moved)
+- ❌ **DON'T**: Remove `example.md` (it's excluded from publishing)
+
 ## Project Structure
 
 ```
 Blogchan/
+├── .github/
+│   └── workflows/
+│       └── publish-notes.yml # GitHub Actions workflow for auto-publishing
 ├── config/
 │   └── connection.js          # Sequelize database connection
 ├── controllers/
@@ -128,6 +281,11 @@ Blogchan/
 │   ├── User.js               # User model
 │   ├── BlogPost.js           # Blog post model
 │   └── Comment.js            # Comment model
+├── notes/
+│   ├── drafts/               # Place markdown files here for publishing
+│   │   └── example.md        # Example template
+│   ├── published/            # Published files moved here
+│   └── README.md             # Markdown publishing documentation
 ├── public/
 │   ├── css/
 │   │   ├── style.css         # Global styles
@@ -137,6 +295,8 @@ Blogchan/
 │   │   ├── script.js         # Vote functionality
 │   │   └── api.js            # Reddit API integration
 │   └── assets/               # Images and icons
+├── scripts/
+│   └── publish-notes.js      # Markdown to blog post converter
 ├── seeds/                    # Database seed files
 ├── utils/
 │   ├── auth.js               # Authentication middleware
@@ -149,6 +309,7 @@ Blogchan/
 ├── .env.example              # Environment variables template
 ├── package.json
 ├── Procfile                  # Heroku deployment config
+├── README.md                 # This file
 └── server.js                 # Application entry point
 ```
 
