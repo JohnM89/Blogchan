@@ -197,17 +197,33 @@ Set the author username in `.env`:
 BLOG_AUTHOR_USERNAME=your-username
 ```
 
-### GitHub Actions Setup
+### Local Workflow (Recommended for Local Development)
 
-The workflow is already configured in `.github/workflows/publish-notes.yml` and runs:
+The simplest approach for local development:
 
-- **Daily** at midnight UTC
-- **On push** when `.md` files are added to `notes/drafts/`
-- **Manually** via GitHub Actions UI
+1. **Write** your markdown notes in `notes/drafts/`
+2. **Run** the publish script:
+   ```bash
+   npm run publish-notes
+   ```
+3. **View** your published posts at `http://localhost:3001`
 
-#### Required Secrets (for production)
+Your files are automatically moved from `drafts/` to `published/` after publishing.
 
-If using a remote database, add these to GitHub repository secrets:
+### GitHub Actions Setup (Optional - For Hosted Deployments)
+
+> **Note**: Requires a hosted database service (Railway, Render, PlanetScale, etc.)
+
+The workflow in `.github/workflows/publish-notes.yml` can run automated publishing if you deploy to a free hosting service:
+
+#### Free Hosting Options
+- **Railway** - Free tier with MySQL
+- **Render** - Free tier with PostgreSQL (requires minor DB adapter change)
+- **Fly.io** - Free tier with persistent storage
+- **PlanetScale** - Free MySQL database (serverless)
+
+#### Setup for Hosted Deployment
+Add these secrets to your GitHub repository (Settings → Secrets):
 
 - `DB_NAME` - Database name
 - `DB_USER` - Database user
@@ -216,11 +232,10 @@ If using a remote database, add these to GitHub repository secrets:
 - `SESSION_SECRET` - Session secret key
 - `BLOG_AUTHOR_USERNAME` - Author username for posts
 
-#### Trigger Manual Run
-
-1. Go to **Actions** tab in GitHub
-2. Select **Publish Markdown Notes** workflow
-3. Click **Run workflow**
+The workflow will then run:
+- **Daily** at midnight UTC
+- **On push** when `.md` files are added to `notes/drafts/`
+- **Manually** via GitHub Actions UI
 
 ### Directory Structure
 

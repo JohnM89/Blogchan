@@ -45,25 +45,39 @@ console.log('Hello, BlogChan!');
 - `author` (optional): Author name (defaults to your username)
 - `tags` (optional): Comma-separated tags
 
-## Automated Publishing
+## Publishing Your Notes
 
-The GitHub Actions workflow runs daily at midnight UTC and:
-1. Scans the `drafts/` folder for new `.md` files
-2. Converts them to blog posts
-3. Publishes them to BlogChan
-4. Moves processed files to `published/`
+### Local Publishing (Recommended)
 
-## Manual Publishing
+The easiest way to publish your notes:
 
-Run the script manually:
+1. **Make sure your server is running** (in another terminal):
+   ```bash
+   npm start
+   # or for development:
+   npm run dev
+   ```
+
+2. **Publish your notes**:
+   ```bash
+   npm run publish-notes
+   ```
+
+3. **View your posts** at `http://localhost:3001/homepage`
+
+Files are automatically moved from `drafts/` to `published/` after successful publishing.
+
+### Publish Specific File
+
 ```bash
-npm run publish-notes
+node scripts/publish-notes.js notes/drafts/my-specific-post.md
 ```
 
-Or publish a specific file:
-```bash
-node scripts/publish-notes.js notes/drafts/my-post.md
-```
+### Automated Publishing (Advanced)
+
+> **Note**: Only works with hosted deployments (Railway, Render, etc.)
+
+If you deploy BlogChan to a free hosting service with a database, the GitHub Actions workflow can automatically publish notes daily at midnight UTC. See the main README.md for deployment instructions.
 
 ## Example Note
 
